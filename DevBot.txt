@@ -1,15 +1,15 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------
 
 // Options (0 - False | 1 - True):
 #upgrade_on_start = 1
 
-// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------
 
 // Positions:
-#welcome_back_screen_collect_button_x = 140
+#welcome_back_screen_collect_button_x = 180
 #welcome_back_screen_collect_button_y = 710
 #screen_hit_min_x = 0
 #screen_hit_min_y = 210
@@ -41,6 +41,20 @@
 #skills_tab_upgrade_button_x = 460
 #skills_tab_upgrade_button_y = 150
 #skills_tab_max_upgrade_button_x = 275
+#heroes_tab_button_x = 135
+#heroes_tab_button_y = 940
+#android_settings_x = 60
+#android_settings_y = 350
+#android_apps_x = 270
+#android_apps_y = 725
+#android_tt2_app_x = 280
+#android_tt2_app_y = 530
+#android_tt2_force_stop_x = 130
+#android_tt2_force_stop_y = 170
+#android_tt2_approve_stop_x = 430
+#android_tt2_approve_stop_y = 540
+#pet_eggs_icon_x = 33
+#pet_eggs_icon_y = 333
 
 
 // Colors:
@@ -60,6 +74,8 @@
 #skill_tree_icon_color = 3531516
 #maximize_tab_button_color = 3160133
 #max_upgrade_skill_button_color = 2105734
+#heroes_tab_button_color = 6379040
+#pet_eggs_icon_color = -65793
 
 
 // Values:
@@ -70,8 +86,10 @@
 #result_3 = 0
 #repeat = 0
 #touch_delay = 20
+#game_reset = 0
 
-// -----------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------------------------------------
 
 if #upgrade_on_start == 1
 	goto :fun_upgrade_tap_and_skills
@@ -79,6 +97,35 @@ endif
 
 goto :start
 
+// =======================================================================================================================
+:fun_reset_game
+	keyPress K_HOME
+	sleep 2000
+	
+	touchPress 0 #android_settings_x #android_settings_y
+	sleep 2000
+	
+	touchPress 0 #android_apps_x #android_apps_y
+	sleep 2000
+	
+	touchPress 0 #android_tt2_app_x #android_tt2_app_y
+	sleep 2000
+	
+	touchPress 0 #android_tt2_force_stop_x #android_tt2_force_stop_y
+	sleep 2000
+	
+	touchPress 0 #android_tt2_approve_stop_x #android_tt2_approve_stop_y
+	sleep 2000
+	
+	RunApp com.gamehivecorp.taptitans2
+	sleep 20000
+	
+	#game_reset = 1
+	goto :fun_check_everything_ok
+	
+	
+// =======================================================================================================================
+// =======================================================================================================================
 // Close the 'Welcome Back!' screen when re-logging
 :fun_close_welcome_back_screen
 	getColor #tmp_color_1 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
@@ -90,7 +137,8 @@ goto :start
 	endif
 	
 	goto :fun_accept_daily_rewards
-
+// =======================================================================================================================
+// =======================================================================================================================
 // Accept the daily rewards given
 :fun_accept_daily_rewards
 	getColor #tmp_color_1 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
@@ -116,7 +164,8 @@ goto :start
 	endif
 	
 	goto :fun_fight_boss
-	
+// =======================================================================================================================
+// =======================================================================================================================
 // Click the 'FIGHT BOSS' button if one exist
 :fun_fight_boss
 	getColor #tmp_color_1 #fight_boss_button_icon_x #fight_boss_button_icon_y
@@ -128,8 +177,24 @@ goto :start
 		touchUp 0
 	endif
 	
+	goto :fun_check_pet_eggs
+	
+// Check for pet eggs
+:fun_check_pet_eggs
+	getColor #tmp_color_1 #pet_eggs_icon_x #pet_eggs_icon_y
+	
+	if #tmp_color_1 == #pet_eggs_icon_color
+		touchPress 0 #pet_eggs_icon_x #pet_eggs_icon_y
+		sleep 2000
+		touchPress 0 #pet_eggs_icon_x #pet_eggs_icon_y
+		sleep 2000
+		touchPress 0 #pet_eggs_icon_x #pet_eggs_icon_y
+		sleep 2000
+	endif
+	
 	goto :fun_check_everything_ok
-
+// =======================================================================================================================
+// =======================================================================================================================
 // Checks if the game state is ok
 :fun_check_everything_ok
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
@@ -140,8 +205,13 @@ goto :start
 		goto :fun_check_everything_ok
 	endif
 	
+	if #game_reset == 1
+		toast TT2 reset successfully, starting agane boys!
+	endif
+	
 	goto :start
-
+// =======================================================================================================================
+// =======================================================================================================================
 // Upgrade tap damage and skills
 :fun_upgrade_tap_and_skills
 	// Open skills tab
@@ -218,11 +288,16 @@ goto :start
 			#repeat = 0
 			
 	goto :fun_upgrade_heroes
-			
+// =======================================================================================================================
+// =======================================================================================================================
 // Upgrade heroes
 :fun_upgrade_heroes
+	getColor #tmp_color_1 #heroes_tab_button_x #heroes_tab_button_y
 	
-
+	if #tmp_color_1 
+	
+// =======================================================================================================================
+// =======================================================================================================================
 :start
 	:fun_click_screen
 		rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
