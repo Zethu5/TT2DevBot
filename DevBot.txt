@@ -36,6 +36,8 @@
 #skill_tree_icon_y_maximized = 75
 #scroll_up_x = 250
 #scroll_up_y = 75
+#scroll_down_x = 250
+#scroll_down_y = 900
 #maximize_tab_button_x = 430
 #maximize_tab_button_y = 530
 #skills_tab_upgrade_button_x = 460
@@ -55,6 +57,12 @@
 #android_tt2_approve_stop_y = 540
 #pet_eggs_icon_x = 33
 #pet_eggs_icon_y = 333
+#upgrade_heroes_x = 460
+#upgrade_heroes_y = 130
+#masteries_inner_circle_x = 60
+#masteries_inner_circle_y = 67
+#close_tab_button_x = 505
+#close_tab_button_y = 15
 
 
 // Colors:
@@ -74,19 +82,25 @@
 #skill_tree_icon_color = 3531516
 #maximize_tab_button_color = 3160133
 #max_upgrade_skill_button_color = 2105734
-#heroes_tab_button_color = 6379040
+#heroes_tab_button_inactive_color = 6379040
+#heroes_tab_button_active_color = 2958364
 #pet_eggs_icon_color = -65793
+#masteries_inner_circle_color = 3005183
+#close_tab_button_color = 3160133
 
 
 // Values:
 #loops = 1
-#press_delay = 200
+#btn_delay = 150
+#hit_delay = 40
 #result = 0
 #result_2 = 0
 #result_3 = 0
 #repeat = 0
-#touch_delay = 20
-#game_reset = 0
+#repeat_2 = 0
+#return_value = 0
+#retries = 0
+#checking_if_ok = 0
 
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -96,8 +110,51 @@ if #upgrade_on_start == 1
 endif
 
 goto :start
-
 // =======================================================================================================================
+// =======================================================================================================================
+// Checks if the game state is ok
+:fun_check_everything_ok
+	if #checking_if_ok == 1
+		#checking_if_ok = 0
+		#retries = 0
+	endif
+	
+	if #retries > 10
+		#retries = 0
+		goto :fun_reset_game
+	endif
+
+	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+	
+	if #tmp_color_1 != #skills_tab_passive_color
+		keyPress K_BACK
+		sleep 1000
+		#retries = #retries + 1
+		goto :fun_check_everything_ok
+	endif
+	
+	#retries = 0
+	
+	if #return_value == 1
+		goto :return_value_1
+	elseif #return_value == 2
+		goto :return_value_2
+	elseif #return_value == 3
+		goto :return_value_3
+	elseif #return_value == 4
+		goto :return_value_4
+	elseif #return_value == 5
+		goto :return_value_5
+	elseif #return_value == 6
+		goto :return_value_6
+	elseif #return_value == 7
+		goto :return_value_7
+	elseif #return_value == 72
+		goto :return_value_72
+	endif
+// =======================================================================================================================
+// =======================================================================================================================
+// REUTRN VALUE - 1
 :fun_reset_game
 	keyPress K_HOME
 	sleep 2000
@@ -120,36 +177,47 @@ goto :start
 	RunApp com.gamehivecorp.taptitans2
 	sleep 20000
 	
-	#game_reset = 1
+	toast TT2 reset successfully, starting agane boys!
+	
+	#return_value = 1
+	#checking_if_ok = 1
 	goto :fun_check_everything_ok
+	
+	:return_value_1
+	goto :start
 	
 	
 // =======================================================================================================================
 // =======================================================================================================================
 // Close the 'Welcome Back!' screen when re-logging
+// REUTRN VALUE - 2
 :fun_close_welcome_back_screen
 	getColor #tmp_color_1 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
 	
 	if #tmp_color_1 == #welcome_back_screen_collect_button_color
 		touchDown 0 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
-		sleep #touch_delay
+		sleep #btn_delay
 		touchUp 0
 	endif
 	
+	#return_value = 2
+	#checking_if_ok = 1
+	goto :fun_check_everything_ok
+	
+	:return_value_2
 	goto :fun_accept_daily_rewards
 // =======================================================================================================================
 // =======================================================================================================================
 // Accept the daily rewards given
+// REUTRN VALUE - 3
 :fun_accept_daily_rewards
 	getColor #tmp_color_1 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
 	getColor #tmp_color_2 #daily_rewards_icon_left_ribbon_x #daily_rewards_icon_left_ribbon_y
 	
 	if #tmp_color_1 == #daily_rewards_icon_right_ribbon_color and #tmp_color_2 == #daily_rewards_icon_left_ribbon_color
 		touchDown 0 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
-		sleep #touch_delay
+		sleep #btn_delay
 		touchUp 0
-	else
-		goto :fun_fight_boss
 	endif
 	
 	sleep 1000
@@ -159,27 +227,40 @@ goto :start
 	
 	if #tmp_color_1 == #daily_rewards_top_bar_color and #tmp_color_2 == #daily_rewards_collect_button_color
 		touchDown 0 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
-		sleep #touch_delay
+		sleep #btn_delay
 		touchUp 0
 	endif
 	
+	#return_value = 3
+	#checking_if_ok = 1
+	goto :fun_check_everything_ok
+	
+	:return_value_3
 	goto :fun_fight_boss
 // =======================================================================================================================
 // =======================================================================================================================
 // Click the 'FIGHT BOSS' button if one exist
+// REUTRN VALUE - 4
 :fun_fight_boss
 	getColor #tmp_color_1 #fight_boss_button_icon_x #fight_boss_button_icon_y
 	getColor #tmp_color_2 #fight_boss_button_bg_x #fight_boss_button_bg_y
 	
 	if #tmp_color_1 == #fight_boss_button_icon_color and #tmp_color_2 == #fight_boss_button_bg_color
 		touchDown 0 #fight_boss_button_icon_x #fight_boss_button_icon_y
-		sleep #touch_delay
+		sleep #btn_delay
 		touchUp 0
 	endif
 	
-	goto :fun_check_pet_eggs
+	#return_value = 4
+	#checking_if_ok = 1
+	goto :fun_check_everything_ok
 	
+	:return_value_4
+	goto :fun_check_pet_eggs
+// =======================================================================================================================
+// =======================================================================================================================
 // Check for pet eggs
+// REUTRN VALUE - 5
 :fun_check_pet_eggs
 	getColor #tmp_color_1 #pet_eggs_icon_x #pet_eggs_icon_y
 	
@@ -192,36 +273,28 @@ goto :start
 		sleep 2000
 	endif
 	
+	#return_value = 5
+	#checking_if_ok = 1
 	goto :fun_check_everything_ok
-// =======================================================================================================================
-// =======================================================================================================================
-// Checks if the game state is ok
-:fun_check_everything_ok
-	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
-	if #tmp_color_1 != #skills_tab_passive_color
-		keyPress K_BACK
-		sleep 1000
-		goto :fun_check_everything_ok
-	endif
-	
-	if #game_reset == 1
-		toast TT2 reset successfully, starting agane boys!
-	endif
-	
+	:return_value_5
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 // Upgrade tap damage and skills
+// REUTRN VALUE - 6
 :fun_upgrade_tap_and_skills
+	:return_value_6
 	// Open skills tab
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
 	if #tmp_color_1 == #skills_tab_passive_color
 		touchDown 0 #skills_tab_x #skills_tab_y
-		sleep #touch_delay
+		sleep #btn_delay
 		touchUp 0
 	elseif #tmp_color_1 != #skills_tab_active_color
+		#return_value = 6
+		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 	endif
 	
@@ -243,7 +316,7 @@ goto :start
 		
 		:fun_skills_tab_scroll_up_loop
 			touchMove 0 #scroll_up_x #result
-			sleep #touch_delay
+			sleep #btn_delay
 			
 			if #repeat < 10
 				#result = #result + 50
@@ -263,20 +336,19 @@ goto :start
 		endif
 		
 		touchPress 0 #skills_tab_upgrade_button_x #skills_tab_upgrade_button_y
-		sleep #press_delay
+		sleep #btn_delay
 		
 		#repeat = 0
 		#result = #skills_tab_upgrade_button_y + 90
 		
 		:fun_skills_tab_upgrade_press
 			touchPress 0 #skills_tab_upgrade_button_x #result
-			sleep 400
+			sleep 200
 			
 			getColor #tmp_color_1 #skills_tab_max_upgrade_button_x #result
 			
 			if #tmp_color_1 == #max_upgrade_skill_button_color
 				touchPress 0 #skills_tab_max_upgrade_button_x #result
-				sleep #press_delay
 			endif
 			
 			if #repeat < 5
@@ -291,11 +363,124 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 // Upgrade heroes
+// REUTRN VALUE - 7
 :fun_upgrade_heroes
+	:return_value_7
+	
+	touchDown 0 #heroes_tab_button_x #heroes_tab_button_y
+	sleep #btn_delay
+	touchUp 0
+	
 	getColor #tmp_color_1 #heroes_tab_button_x #heroes_tab_button_y
 	
-	if #tmp_color_1 
+	if #tmp_color_1 != #heroes_tab_button_active_color and #tmp_color_1 != #heroes_tab_button_inactive_color
+		#return_value = 7
+		#checking_if_ok = 1
+		goto :fun_check_everything_ok
+	endif
+
+	:fun_heroes_tab_scroll_up
+		touchDown 0 #scroll_up_x #scroll_up_y
+		sleep 1000
+		#result = #scroll_up_y + 50
+		
+		:fun_heroes_tab_scroll_up_loop
+			touchMove 0 #scroll_up_x #result
+			sleep #btn_delay
+			
+			if #repeat < 10
+				#result = #result + 50
+				#repeat = #repeat + 1
+				goto :fun_heroes_tab_scroll_up_loop
+			else
+				#repeat = 0
+			endif
+		
+		touchUp 0
+		sleep 1500
+		
+		getColor #tmp_color_1 #masteries_inner_circle_x #masteries_inner_circle_y
+		
+		if #tmp_color_1 != #masteries_inner_circle_color
+			goto :fun_heroes_tab_scroll_up
+		endif
+		
+	#repeat = 0
+	#repeat_2 = 0
+	#result = #upgrade_heroes_y
 	
+	:fun_heroes_tab_click_upgrade
+		if #repeat < 10
+			touchPress 0 #upgrade_heroes_x #result
+			sleep 150
+			#result = #result + 85
+			#repeat = #repeat + 1
+			goto :fun_heroes_tab_click_upgrade
+		endif
+	
+	#repeat = 0
+	#result = #upgrade_heroes_y
+	
+	:fun_heroes_tab_scroll_down
+		touchDown 0 230 700
+		sleep 1000
+		touchMove 0 230 695
+		sleep 50
+		touchMove 0 230 690
+		sleep 50
+		touchMove 0 230 670
+		sleep 50
+		touchMove 0 230 650
+		sleep 50
+		touchMove 0 230 610
+		sleep 50
+		touchMove 0 230 570
+		sleep 50
+		touchMove 0 230 490
+		sleep 50
+		touchMove 0 230 410
+		sleep 50
+		touchMove 0 230 340
+		sleep 50
+		touchMove 0 230 270
+		sleep 50
+		touchMove 0 230 220
+		sleep 50
+		touchMove 0 230 175
+		sleep 50
+		touchMove 0 230 135
+		sleep 50
+		touchMove 0 230 105
+		sleep 50
+		touchMove 0 230 95
+		sleep 50
+		touchMove 0 230 90
+		sleep 50
+		touchMove 0 230 90
+		sleep 50
+		touchMove 0 230 90
+		sleep 300
+		touchUp 0
+
+		
+		if #repeat_2 < 4
+			#repeat_2 = #repeat_2 + 1
+			goto :fun_heroes_tab_click_upgrade
+		endif
+		
+	:func_close_heroes_tab
+		getColor #tmp_color_1 #close_tab_button_x #close_tab_button_y
+		
+		if #tmp_color_1 == #close_tab_button_color
+			touchPress 0 #close_tab_button_x #close_tab_button_y
+			sleep #btn_delay
+		endif
+		
+		#return_value = 72
+		goto :fun_check_everything_ok
+		
+		:return_value_72
+		goto :start	
 // =======================================================================================================================
 // =======================================================================================================================
 :start
@@ -303,7 +488,7 @@ goto :start
 		rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
 		rand #screen_hit_y #screen_hit_min_y #screen_hit_max_y
 		touchDown 0 #screen_hit_x #screen_hit_y
-		sleep #touch_delay
+		sleep #hit_delay
 		touchUp 0
 		
 		#result = #loops % 1000
