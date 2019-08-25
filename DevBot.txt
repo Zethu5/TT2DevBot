@@ -27,6 +27,10 @@
 #fight_boss_button_icon_y = 35
 #fight_boss_button_bg_x = 500
 #fight_boss_button_bg_y = 60
+#tap_dmg_icon_x = 50
+#tap_dmg_icon_y = 940
+#tap_dmg_bg_x = 60
+#tap_dmg_bg_y = 950
 
 // Colors:
 #tmp_color_1 = 0
@@ -40,6 +44,8 @@
 #daily_rewards_collect_button_color = -4089562
 #fight_boss_button_icon_color = 266788
 #fight_boss_button_bg_color = 1071599
+#tap_dmg_icon_color = 2112406
+#tap_dmg_bg_color = 3695603
 
 // Values:
 #loops = 1
@@ -90,6 +96,7 @@ goto :start
 	
 	goto :fun_fight_boss
 	
+// Click the 'FIGHT BOSS' button if one exist
 :fun_fight_boss
 	getColor #tmp_color_1 #fight_boss_button_icon_x #fight_boss_button_icon_y
 	getColor #tmp_color_2 #fight_boss_button_bg_x #fight_boss_button_bg_y
@@ -98,9 +105,22 @@ goto :start
 		touchDown 0 #fight_boss_button_icon_x #fight_boss_button_icon_y
 		sleep 20
 		touchUp 0
-	else
-		goto :start
 	endif
+	
+	goto :fun_check_everything_ok
+
+// Checks if the game state is ok
+:fun_check_everything_ok
+	getColor #tmp_color_1 #tap_dmg_icon_x #tap_dmg_icon_y
+	getColor #tmp_color_2 #tap_dmg_bg_x #tap_dmg_bg_y
+	
+	if #tmp_color_1 != #tap_dmg_icon_color or #tmp_color_2 != #tap_dmg_bg_color
+		keyPress K_BACK
+		sleep 1000
+		goto :fun_check_everything_ok
+	endif
+	
+	goto :start
 
 :start
 :fun_click_screen
