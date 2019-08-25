@@ -1,7 +1,13 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-/ TODO: Fairy commercials player choice, skills choice, boss run, random messeges popping up to take care of
+// TODO: Fairy commercials player choice
+// TODO: Skills activate choice
+// TODO: Boss Run
+// TODO: Random messeges popping up to take care of if need be (probably will be)
+// TODO: Fixing the scroll up of tap damage + skills + heroes upgrade, need to check if in position first to save an un-necessery scrol procedure
+// TODO: Add a safety feature to the scroll of the upgrades with a maximum scroll integer that when will number of scrolls get to it - will restart the game
+// TODO: Fix fight boss function - doesn't press the button when available
 
 // -----------------------------------------------------------------------------------------------------------------------
 
