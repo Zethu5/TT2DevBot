@@ -15,6 +15,18 @@
 #screen_hit_max_y = 420
 #screen_hit_x = 0
 #screen_hit_y = 0
+#daily_rewards_icon_right_ribbon_x = 42
+#daily_rewards_icon_right_ribbon_y = 220
+#daily_rewards_icon_left_ribbon_x = 28
+#daily_rewards_icon_left_ribbon_y = 210
+#daily_rewards_top_bar_x = 270
+#daily_rewards_top_bar_y = 255
+#daily_rewards_collect_button_x = 270
+#daily_rewards_collect_button_y = 650
+#fight_boss_button_icon_x = 510
+#fight_boss_button_icon_y = 35
+#fight_boss_button_bg_x = 500
+#fight_boss_button_bg_y = 60
 
 // Colors:
 #tmp_color_1 = 0
@@ -22,9 +34,15 @@
 #tmp_color_3 = 0
 #welcome_back_screen_bg_color = 1835008
 #welcome_back_screen_collect_button_color = 753915
+#daily_rewards_icon_right_ribbon_color = 2631135
+#daily_rewards_icon_left_ribbon_color = 3158011
+#daily_rewards_top_bar_color = 3311064
+#daily_rewards_collect_button_color = -4089562
+#fight_boss_button_icon_color = 266788
+#fight_boss_button_bg_color = 1071599
 
 // Values:
-#loop = 0
+#loops = 1
 #delay = 100
 #result = 0
 
@@ -44,7 +62,45 @@ goto :start
 		touchUp 0
 	endif
 	
-	goto :start
+	goto :fun_accept_daily_rewards
+
+// Accept the daily rewards given
+:fun_accept_daily_rewards
+	getColor #tmp_color_1 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
+	getColor #tmp_color_2 #daily_rewards_icon_left_ribbon_x #daily_rewards_icon_left_ribbon_y
+	
+	if #tmp_color_1 == #daily_rewards_icon_right_ribbon_color and #tmp_color_2 == #daily_rewards_icon_left_ribbon_color
+		touchDown 0 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
+		sleep 20
+		touchUp 0
+	else
+		goto :fun_fight_boss
+	endif
+	
+	sleep 1000
+	
+	getColor #tmp_color_1 #daily_rewards_top_bar_x #daily_rewards_top_bar_y
+	getColor #tmp_color_2 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
+	
+	if #tmp_color_1 == #daily_rewards_top_bar_color and #tmp_color_2 == #daily_rewards_collect_button_color
+		touchDown 0 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
+		sleep 20
+		touchUp 0
+	endif
+	
+	goto :fun_fight_boss
+	
+:fun_fight_boss
+	getColor #tmp_color_1 #fight_boss_button_icon_x #fight_boss_button_icon_y
+	getColor #tmp_color_2 #fight_boss_button_bg_x #fight_boss_button_bg_y
+	
+	if #tmp_color_1 == #fight_boss_button_icon_color and #tmp_color_2 == #fight_boss_button_bg_color
+		touchDown 0 #fight_boss_button_icon_x #fight_boss_button_icon_y
+		sleep 20
+		touchUp 0
+	else
+		goto :start
+	endif
 
 :start
 :fun_click_screen
@@ -54,13 +110,13 @@ goto :start
 	sleep 20
 	touchUp 0
 	
-	#result = #loop % 100
+	#result = #loops % 100
 	
 	if #result == 0
-		#loop = 0
-		sleep 1000
+		#loops = 1
+		goto :fun_close_welcome_back_screen
 	endif
 	
-#loop = #loop + 1
+#loops = #loops + 1
 goto :start
 :end
