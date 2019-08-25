@@ -1,0 +1,66 @@
+// Made by Zethus
+// Nox - Mobile Phone - 540x960
+
+// -----------------------------------------------------------------------------------
+
+// Positions:
+#welcome_back_screen_bg_x1 = 60
+#welcome_back_screen_bg_x2 = 480
+#welcome_back_screen_bg_y = 280
+#welcome_back_screen_collect_button_x = 140
+#welcome_back_screen_collect_button_y = 710
+#screen_hit_min_x = 0
+#screen_hit_min_y = 210
+#screen_hit_max_x = 540
+#screen_hit_max_y = 420
+#screen_hit_x = 0
+#screen_hit_y = 0
+
+// Colors:
+#tmp_color_1 = 0
+#tmp_color_2 = 0
+#tmp_color_3 = 0
+#welcome_back_screen_bg_color = 1835008
+#welcome_back_screen_collect_button_color = 753915
+
+// Values:
+#loop = 0
+#delay = 100
+#result = 0
+
+// -----------------------------------------------------------------------------------
+
+goto :start
+
+// Close the 'Welcome Back!' screen when re-logging
+:fun_close_welcome_back_screen
+	getColor #tmp_color_1 #welcome_back_screen_bg_x1 #welcome_back_screen_bg_y
+	getColor #tmp_color_2 #welcome_back_screen_bg_x2 #welcome_back_screen_bg_y
+	getColor #tmp_color_3 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
+	
+	if #tmp_color_1 == #welcome_back_screen_bg_color and #tmp_color_2 == #welcome_back_screen_bg_color and #tmp_color_3 == #welcome_back_screen_collect_button_color
+		touchDown 0 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
+		sleep 20
+		touchUp 0
+	endif
+	
+	goto :start
+
+:start
+:fun_click_screen
+	rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
+	rand #screen_hit_y #screen_hit_min_y #screen_hit_max_y
+	touchDown 0 #screen_hit_x #screen_hit_y
+	sleep 20
+	touchUp 0
+	
+	#result = #loop % 100
+	
+	if #result == 0
+		#loop = 0
+		sleep 1000
+	endif
+	
+#loop = #loop + 1
+goto :start
+:end
