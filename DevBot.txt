@@ -203,7 +203,6 @@ goto :start
 			sleep 400
 			
 			getColor #tmp_color_1 #skills_tab_max_upgrade_button_x #result
-			log #skills_tab_max_upgrade_button_x | #result | #tmp_color_1
 			
 			if #tmp_color_1 == #max_upgrade_skill_button_color
 				touchPress 0 #skills_tab_max_upgrade_button_x #result
@@ -217,6 +216,12 @@ goto :start
 			endif
 			
 			#repeat = 0
+			
+	goto :fun_upgrade_heroes
+			
+// Upgrade heroes
+:fun_upgrade_heroes
+	
 
 :start
 	:fun_click_screen
