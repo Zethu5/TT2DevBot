@@ -1,6 +1,8 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
+/ TODO: Fairy commercials player choice, skills choice, boss run, random messeges popping up to take care of
+
 // -----------------------------------------------------------------------------------------------------------------------
 
 // Options (0 - False | 1 - True):
