@@ -5,14 +5,27 @@
 // TODO: Skills activate choice
 // TODO: Boss Run
 // TODO: Random messeges popping up to take care of if need be (probably will be)
-// TODO: Fixing the scroll up of tap damage + skills + heroes upgrade, need to check if in position first to save an un-necessery scrol procedure
-// TODO: Add a safety feature to the scroll of the upgrades with a maximum scroll integer that when will number of scrolls get to it - will restart the game
-// TODO: Fix fight boss function - doesn't press the button when available
+// TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
+
+
+// METADATA:
+// 26/8/2019 - 21.2 loops per second
+
+// NOTES:
+// NOT TOUCHING FALLEN ITEMS
+// x - 330 
+// y - 395 - did touch the item, should be something like 390 mb lower - need to check
 
 // -----------------------------------------------------------------------------------------------------------------------
-
 // Options (0 - False | 1 - True):
-#upgrade_on_start = 1
+
+#upgrade_on_start = 0
+
+#fairy_gold_accept = 0
+#fairy_diamonds_accept = 1
+#fairy_skills_accept = 1
+#fairy_mana_accept = 1
+#fairy_discount_accept = 0
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -71,6 +84,47 @@
 #masteries_inner_circle_y = 67
 #close_tab_button_x = 505
 #close_tab_button_y = 15
+#fairy_buttons_y = 690
+#fairy_declice_button_x = 145
+#fairy_accept_button_x = 415
+#fairy_discount_x1 = 170
+#fairy_discount_y1 = 350
+#fairy_discount_x2 = 360
+#fairy_discount_y2 = 330
+#fairy_discount_x3 = 420
+#fairy_discount_y3 = 350
+#fairy_gold_x1 = 105
+#fairy_gold_y1 = 375
+#fairy_gold_x2 = 225
+#fairy_gold_y2 = 380
+#fairy_gold_x3 = 280
+#fairy_gold_y3 = 415
+#fairy_diamonds_x1 = 150
+#fairy_diamonds_y1 = 360
+#fairy_diamonds_x2 = 270
+#fairy_diamonds_y2 = 340
+#fairy_diamonds_x3 = 360
+#fairy_diamonds_y3 = 425
+#fairy_skills_x1 = 120
+#fairy_skills_y1 = 385
+#fairy_skills_x1 = 335
+#fairy_skills_y1 = 325
+#fairy_skills_x1 = 415
+#fairy_skills_y1 = 290
+#fairy_mana_x1 = 140
+#fairy_mana_y1 = 390
+#fairy_mana_x2 = 260
+#fairy_mana_y2 = 370
+#fairy_mana_x3 = 85
+#fairy_mana_y3 = 615
+#fairy_mana_bar_check_x = 180
+#fairy_mana_bar_check_y = 775
+#fairy_resume_video_x1 = 440
+#fairy_resume_video_y1 = 565
+#fairy_resume_video_x2 = 340
+#fairy_resume_video_y2 = 565
+#fairy_collect_reward_x = 275
+#fairy_collect_reward_y = 685
 
 
 // Colors:
@@ -95,6 +149,26 @@
 #pet_eggs_icon_color = -65793
 #masteries_inner_circle_color = 3005183
 #close_tab_button_color = 3160133
+#fairy_discount_color1 = -65832
+#fairy_discount_color2 = 1826555
+#fairy_discount_color3 = 7416279
+#fairy_gold_color1 = -65832
+#fairy_gold_color2 = -2954244
+#fairy_gold_color3 = 1645
+#fairy_diamonds_color1 = -65832
+#fairy_diamonds_color2 = -2431237
+#fairy_diamonds_color3 = -66199
+#fairy_skills_color1 = -65832
+#fairy_skills_color2 = 2656
+#fairy_skills_color3 = 1053984
+#fairy_mana_color1 = -2701963
+#fairy_mana_color2 = -2431237
+#fairy_mana_color3 = -1125080
+#fairy_mana_bar_check_color = 8353807
+#fairy_decline_commercial_color = 753915
+#fairy_accept_commercial_color = -2708696
+#fairy_resume_video_color = -622018
+#fairy_collect_reward_color = -2446036
 
 
 // Values:
@@ -106,9 +180,12 @@
 #result_3 = 0
 #repeat = 0
 #repeat_2 = 0
+#repeat_3 = 0
 #return_value = 0
 #retries = 0
 #checking_if_ok = 0
+#fairy_option = 0
+#fairy_mana_commercial_approve = 0
 
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -143,7 +220,9 @@ goto :start
 	
 	#retries = 0
 	
-	if #return_value == 1
+	if #return_value == 0
+		goto :start
+	elseif #return_value == 1
 		goto :return_value_1
 	elseif #return_value == 2
 		goto :return_value_2
@@ -164,6 +243,7 @@ goto :start
 // =======================================================================================================================
 // REUTRN VALUE - 1
 :fun_reset_game
+	toast [1] Reseting game
 	keyPress K_HOME
 	sleep 2000
 	
@@ -200,6 +280,7 @@ goto :start
 // Close the 'Welcome Back!' screen when re-logging
 // REUTRN VALUE - 2
 :fun_close_welcome_back_screen
+	toast [2] Checking welcome back msg
 	getColor #tmp_color_1 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
 	
 	if #tmp_color_1 == #welcome_back_screen_collect_button_color
@@ -213,12 +294,13 @@ goto :start
 	goto :fun_check_everything_ok
 	
 	:return_value_2
-	goto :fun_accept_daily_rewards
+	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 // Accept the daily rewards given
 // REUTRN VALUE - 3
 :fun_accept_daily_rewards
+	toast [3]  Checking daily rewards
 	getColor #tmp_color_1 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
 	getColor #tmp_color_2 #daily_rewards_icon_left_ribbon_x #daily_rewards_icon_left_ribbon_y
 	
@@ -244,12 +326,13 @@ goto :start
 	goto :fun_check_everything_ok
 	
 	:return_value_3
-	goto :fun_fight_boss
+	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 // Click the 'FIGHT BOSS' button if one exist
 // REUTRN VALUE - 4
 :fun_fight_boss
+	toast [4] Checking fight boss button
 	getColor #tmp_color_1 #fight_boss_button_icon_x #fight_boss_button_icon_y
 	getColor #tmp_color_2 #fight_boss_button_bg_x #fight_boss_button_bg_y
 	
@@ -264,12 +347,13 @@ goto :start
 	goto :fun_check_everything_ok
 	
 	:return_value_4
-	goto :fun_check_pet_eggs
+	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 // Check for pet eggs
 // REUTRN VALUE - 5
 :fun_check_pet_eggs
+	toast [5] Checking pet eggs msg
 	getColor #tmp_color_1 #pet_eggs_icon_x #pet_eggs_icon_y
 	
 	if #tmp_color_1 == #pet_eggs_icon_color
@@ -292,6 +376,7 @@ goto :start
 // Upgrade tap damage and skills
 // REUTRN VALUE - 6
 :fun_upgrade_tap_and_skills
+	toast [6] Upgrading tap + skills
 	:return_value_6
 	// Open skills tab
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
@@ -313,18 +398,32 @@ goto :start
 	
 	if #tmp_color_1 == #maximize_tab_button_color
 		touchPress 0 #maximize_tab_button_x #maximize_tab_button_y
+		sleep #btn_delay
 	endif
 	
 	sleep 1000
 	
+	getColor #tmp_color_1 #skill_tree_icon_x #skill_tree_icon_y_maximized
+	
+	if #tmp_color_1 == #skill_tree_icon_color
+		goto :fun_skills_after_scroll_up
+	endif
+	
+	#repeat_3 = 0
+	
 	:fun_skills_tab_scroll_up
+		if #repeat_3 > 10
+			#repeat_3 = 0
+			goto :fun_reset_game
+		endif
+		
 		touchDown 0 #scroll_up_x #scroll_up_y
 		sleep 1000
 		#result = #scroll_up_y + 50
 		
 		:fun_skills_tab_scroll_up_loop
 			touchMove 0 #scroll_up_x #result
-			sleep #btn_delay
+			sleep 30
 			
 			if #repeat < 10
 				#result = #result + 50
@@ -335,13 +434,16 @@ goto :start
 			endif
 		
 		touchUp 0
-		sleep 1500
+		sleep 2000
 		
 		getColor #tmp_color_1 #skill_tree_icon_x #skill_tree_icon_y_maximized
 		
 		if #tmp_color_1 != #skill_tree_icon_color
+			#repeat_3 = #repeat_3 + 1
 			goto :fun_skills_tab_scroll_up
 		endif
+		
+		:fun_skills_after_scroll_up
 		
 		touchPress 0 #skills_tab_upgrade_button_x #skills_tab_upgrade_button_y
 		sleep #btn_delay
@@ -351,12 +453,13 @@ goto :start
 		
 		:fun_skills_tab_upgrade_press
 			touchPress 0 #skills_tab_upgrade_button_x #result
-			sleep 200
+			sleep #btn_delay
 			
 			getColor #tmp_color_1 #skills_tab_max_upgrade_button_x #result
 			
 			if #tmp_color_1 == #max_upgrade_skill_button_color
 				touchPress 0 #skills_tab_max_upgrade_button_x #result
+				sleep #btn_delay
 			endif
 			
 			if #repeat < 5
@@ -373,6 +476,7 @@ goto :start
 // Upgrade heroes
 // REUTRN VALUE - 7
 :fun_upgrade_heroes
+	toast [7] Upgrading heroes
 	:return_value_7
 	
 	touchDown 0 #heroes_tab_button_x #heroes_tab_button_y
@@ -386,15 +490,27 @@ goto :start
 		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 	endif
+	
+	getColor #tmp_color_1 #masteries_inner_circle_x #masteries_inner_circle_y
+	
+	if #tmp_color_1 == #masteries_inner_circle_color
+		goto :fun_heroes_after_scroll_up
+	endif
+	
+	#repeat_3 = 0
 
 	:fun_heroes_tab_scroll_up
+		if #repeat_3 > 10
+			#repeat_3 = 0
+			goto :fun_reset_game
+		endif
 		touchDown 0 #scroll_up_x #scroll_up_y
 		sleep 1000
 		#result = #scroll_up_y + 50
 		
 		:fun_heroes_tab_scroll_up_loop
 			touchMove 0 #scroll_up_x #result
-			sleep #btn_delay
+			sleep 30
 			
 			if #repeat < 10
 				#result = #result + 50
@@ -409,9 +525,12 @@ goto :start
 		
 		getColor #tmp_color_1 #masteries_inner_circle_x #masteries_inner_circle_y
 		
-		if #tmp_color_1 != #masteries_inner_circle_color
+		if #tmp_color_1 != #masteries_inner_circle_color		
+			#repeat_3 = #repeat_3 + 1
 			goto :fun_heroes_tab_scroll_up
 		endif
+		
+	:fun_heroes_after_scroll_up
 		
 	#repeat = 0
 	#repeat_2 = 0
@@ -420,7 +539,7 @@ goto :start
 	:fun_heroes_tab_click_upgrade
 		if #repeat < 10
 			touchPress 0 #upgrade_heroes_x #result
-			sleep 150
+			sleep #btn_delay
 			#result = #result + 85
 			#repeat = #repeat + 1
 			goto :fun_heroes_tab_click_upgrade
@@ -478,34 +597,260 @@ goto :start
 		
 	:func_close_heroes_tab
 		getColor #tmp_color_1 #close_tab_button_x #close_tab_button_y
-		
+
 		if #tmp_color_1 == #close_tab_button_color
 			touchPress 0 #close_tab_button_x #close_tab_button_y
 			sleep #btn_delay
 		endif
 		
 		#return_value = 72
+		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 		
 		:return_value_72
 		goto :start	
 // =======================================================================================================================
 // =======================================================================================================================
+// REUTRN VALUE - 8
+:fun_fairy_commercials
+	toast [8] Checking fairy commercials
+	
+	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+	
+	if #tmp_color_1 == #skills_tab_passive_color
+		goto :start
+	endif
+	
+	#fairy_option = 0
+	:fairy_gold_commercial
+		getColor #tmp_color_1 #fairy_gold_x1 #fairy_gold_y1
+		getColor #tmp_color_2 #fairy_gold_x2 #fairy_gold_y1
+		getColor #tmp_color_3 #fairy_gold_x3 #fairy_gold_y1
+		
+		if #tmp_color_1 == #fairy_gold_color1 and #tmp_color_2 == #fairy_gold_color2 and #tmp_color_3 == #fairy_gold_color3
+			#fairy_option = 1
+			goto :commercial_option
+		else
+			goto :fairy_diamonds_commercial
+		endif
+	
+	:fairy_diamonds_commercial
+		getColor #tmp_color_1 #fairy_diamonds_x1 #fairy_diamonds_y1
+	    getColor #tmp_color_2 #fairy_diamonds_x2 #fairy_diamonds_y2
+	    getColor #tmp_color_3 #fairy_diamonds_x3 #fairy_diamonds_y3
+		
+		if #tmp_color_1 == #fairy_diamonds_color1 and #tmp_color_2 == #fairy_diamonds_color2 and #tmp_color_3 == #fairy_diamonds_color3
+			#fairy_option = 2
+			goto :commercial_option
+		else
+			goto :fairy_skills_commercial
+		endif
+	
+	:fairy_skills_commercial
+		getColor #tmp_color_1 #fairy_skills_x1 #fairy_skills_y1
+		getColor #tmp_color_2 #fairy_skills_x2 #fairy_skills_y2
+		getColor #tmp_color_3 #fairy_skills_x3 #fairy_skills_y3
+	
+		if #tmp_color_1 == #fairy_skills_color1 and #tmp_color_2 == #fairy_skills_color2 and #tmp_color_3 == #fairy_skills_color3
+			#fairy_option = 3
+			goto :commercial_option
+		else
+			goto :fairy_mana_commercial
+		endif
+	
+	:fairy_mana_commercial
+		getColor #tmp_color_1 #fairy_mana_bar_check_x #fairy_mana_bar_check_y
+	
+		if #tmp_color_1 == #fairy_mana_bar_check_color
+			#fairy_mana_commercial_approve = 0
+			goto :commercial_option
+		else
+			#fairy_mana_commercial_approve = 1
+		endif
+		
+		getColor #tmp_color_1 #fairy_mana_x1 #fairy_mana_y1
+	    getColor #tmp_color_2 #fairy_mana_x2 #fairy_mana_y2
+	    getColor #tmp_color_3 #fairy_mana_x3 #fairy_mana_y3
+		
+		if #tmp_color_1 == #fairy_mana_color1 and #tmp_color_2 == #fairy_mana_color2 and #tmp_color_3 == #fairy_mana_color3
+			#fairy_option = 4
+			goto :commercial_option
+		else
+			goto :fairy_discount_commercial
+		endif
+	
+	:fairy_discount_commercial
+		getColor #tmp_color_1 #fairy_discount_x1 #fairy_discount_y1
+		getColor #tmp_color_2 #fairy_discount_x2 #fairy_discount_y2
+		getColor #tmp_color_3 #fairy_discount_x3 #fairy_discount_y3
+		
+		if #tmp_color_1 == #fairy_discount_color1 and #tmp_color_2 == #fairy_discount_color2 and #tmp_color_3 == #fairy_discount_color3
+			#fairy_option = 5
+			goto :commercial_option
+		else
+			#return_value = 0
+			#checking_if_ok = 1
+			goto :fun_check_everything_ok
+		endif
+	
+	:commercial_option
+		if #fairy_gold_accept == 1 and #fairy_option == 1
+			goto :fairy_commercial_accept
+		elseif #fairy_diamonds_accept == 1 and #fairy_option == 2
+			goto :fairy_commercial_accept
+		elseif #fairy_skills_accept == 1 and #fairy_option == 3
+			goto :fairy_commercial_accept
+		elseif #fairy_mana_accept == 1 and #fairy_option == 4 and #fairy_mana_commercial_approve == 1
+			goto :fairy_commercial_accept
+		elseif #fairy_discount_accept == 1 and #fairy_option == 5
+			goto :fairy_commercial_accept
+		endif
+		
+	#retries = 0
+	:fairy_commercial_decline
+		if #retries > 10
+			#retries = 0
+			goto :fun_reset_game
+		endif
+		
+		getColor #tmp_color_1 #fairy_declice_button_x #fairy_buttons_y
+		
+		if #tmp_color_1 == #fairy_decline_commercial_color
+			touchPress 0 #fairy_declice_button_x #fairy_buttons_y
+			sleep #btn_delay
+			
+			#return_value = 0
+			#checking_if_ok = 1
+			goto :fun_check_everything_ok
+		else
+			#retries = #retries + 1
+			sleep 2000
+			goto :fairy_commercial_decline
+		endif
+	
+	#retries = 0
+	
+	:fairy_commercial_accept
+		if #retries > 10
+			#retries = 0
+			goto :fun_reset_game
+		endif
+		
+		getColor #tmp_color_1 #fairy_accept_button_x #fairy_buttons_y
+		
+		if #tmp_color_1 == #fairy_accept_commercial_color
+			touchPress 0 #fairy_accept_button_x #fairy_buttons_y
+			sleep #btn_delay
+		else
+			#retries = #retries + 1
+			sleep 2000
+			goto :fairy_commercial_accept
+		endif
+		
+		#retries = 0
+		
+		:fairy_commercial_wait
+			if #retries > 10
+				#retries = 0
+				goto :fun_reset_game
+			endif
+		
+			sleep 5000
+			keyPress K_BACK
+			sleep 2000
+			
+			getColor #tmp_color_1 #fairy_resume_video_x1 #fairy_resume_video_y2
+			getColor #tmp_color_2 #fairy_resume_video_x1 #fairy_resume_video_y2
+			
+			if #tmp_color_1 == #fairy_resume_video_color and #tmp_color_2 == #fairy_resume_video_color
+				touchPress 0 #fairy_resume_video_x1 #fairy_resume_video_y2
+				sleep #btn_delay
+			endif
+			
+			getColor #tmp_color_1 #fairy_collect_reward_x #fairy_collect_reward_y
+			
+			if #tmp_color_1 == #fairy_collect_reward_color
+				goto :fairy_collect_reward
+			endif
+			
+			#retries = #retries + 1
+			goto :fairy_commercial_wait
+		
+		#retries = 0
+		
+		:fairy_collect_reward
+			if #retries > 10
+				#retries = 0
+				goto :fun_reset_game
+			endif
+			
+			getColor #tmp_color_1 #fairy_collect_reward_x #fairy_collect_reward_y
+			
+			if #tmp_color_1 == #fairy_collect_reward_color
+				touchPress 0 #fairy_collect_reward_x #fairy_collect_reward_y
+				sleep #btn_delay
+			endif
+			
+			getColor #tmp_color_1 #fairy_collect_reward_x #fairy_collect_reward_y
+			
+			if #tmp_color_1 == #fairy_collect_reward_color
+				#retries = #retries + 1
+				goto :fairy_collect_reward
+			endif
+			
+			sleep 5000
+			
+			#return_value = 0
+			#checking_if_ok = 1
+			goto :fun_check_everything_ok
+// =======================================================================================================================
+// =======================================================================================================================
 :start
 	:fun_click_screen
 		rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
 		rand #screen_hit_y #screen_hit_min_y #screen_hit_max_y
+		
+		#loops = #loops + 1
+		
+		if #screen_hit_x > 330 and #screen_hit_y > 390
+			goto :fun_click_screen
+		endif
+		
 		touchDown 0 #screen_hit_x #screen_hit_y
 		sleep #hit_delay
 		touchUp 0
 		
-		#result = #loops % 1000
-		
+		#result = #loops % 3300
 		if #result == 0
 			#loops = 1
+			goto :fun_upgrade_tap_and_skills
+		endif
+		
+		#result = #loops % 3000
+		if #result == 0
 			goto :fun_close_welcome_back_screen
 		endif
 		
-	#loops = #loops + 1
+		#result = #loops % 2000
+		if #result == 0
+			goto :fun_accept_daily_rewards
+		endif
+		
+		
+		#result = #loops % 800
+		if #result == 0
+			goto :fun_check_pet_eggs
+		endif
+		
+		#result = #loops % 520
+		if #result == 0
+			goto :fun_fight_boss
+		endif
+		
+		#result = #loops % 313
+		if #result == 0
+			goto :fun_fairy_commercials
+		endif
+		
 	goto :start
 :end
