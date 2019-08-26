@@ -844,10 +844,9 @@ goto :start
 // REUTRN VALUE - 9
 :fun_activate_skills
 	toast [9] Activating skills
-	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
-	getColor #tmp_color_2 #mana_bar_x #mana_bar_y
+	getColor #tmp_color_1 #mana_bar_x #mana_bar_y
 	
-	if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #mana_bar_color
+	if #tmp_color_1 != #mana_bar_color
 		#return_value = 0
 		#checking_if_ok = 1
 		goto :fun_check_everything_ok
