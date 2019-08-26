@@ -355,6 +355,12 @@ goto :start
 		touchUp 0
 	endif
 	
+	getColor #tmp_color_1 #mana_bar_x #mana_bar_y
+	
+	if #tmp_color_1 == #mana_bar_color
+		goto :fun_activate_skills
+	endif
+	
 	#return_value = 4
 	#checking_if_ok = 1
 	goto :fun_check_everything_ok
@@ -850,42 +856,42 @@ goto :start
 	#result = #skills_x
 	
 	if #hs_skill == 1
-		touchPress 0 #skills_x #result
+		touchPress 0 #result #skills_y
 		sleep #btn_delay
 	endif
 	
 	#result = #result + 90
 	
 	if #ds_skill == 1
-		touchPress 0 #skills_x #result
+		touchPress 0 #result #skills_y
 		sleep #btn_delay
 	endif
 	
 	#result = #result + 90
 	
 	if #hm_skill == 1
-		touchPress 0 #skills_x #result
+		touchPress 0 #result #skills_y
 		sleep #btn_delay
 	endif
 	
 	#result = #result + 90
 	
 	if #fs_skill == 1
-		touchPress 0 #skills_x #result
+		touchPress 0 #result #skills_y
 		sleep #btn_delay
 	endif
 	
 	#result = #result + 90
 	
 	if #wc_skill == 1
-		touchPress 0 #skills_x #result
+		touchPress 0 #result #skills_y
 		sleep #btn_delay
 	endif
 	
 	#result = #result + 90
 	
 	if #sc_skill == 1
-		touchPress 0 #skills_x #result
+		touchPress 0 #result #skills_y
 		sleep #btn_delay
 	endif
 	
