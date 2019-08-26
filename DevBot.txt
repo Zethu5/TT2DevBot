@@ -905,22 +905,13 @@ goto :start
 		
 		#loops = #loops + 1
 		
-		if #screen_hit_x > 330 and #screen_hit_y > 390
-			goto :fun_click_screen
-		endif
-		
 		touchDown 0 #screen_hit_x #screen_hit_y
 		sleep #hit_delay
 		touchUp 0
 		
-		#result = #loops % 3351
-		if #result == 0
-			#loops = 1
-			goto :fun_activate_skills
-		endif
-		
 		#result = #loops % 3300
 		if #result == 0
+			#loops = 1
 			goto :fun_upgrade_tap_and_skills
 		endif
 		
@@ -934,6 +925,11 @@ goto :start
 			goto :fun_accept_daily_rewards
 		endif
 		
+		#result = #loops % 1001
+		if #result == 0
+			goto :fun_activate_skills
+		endif
+		
 		#result = #loops % 800
 		if #result == 0
 			goto :fun_check_pet_eggs
@@ -942,6 +938,13 @@ goto :start
 		#result = #loops % 520
 		if #result == 0
 			goto :fun_fight_boss
+		endif
+		
+		#result = #loops % 499
+		if #result == 0
+			#return_value = 0
+			#checking_if_ok = 1
+			goto :fun_check_everything_ok
 		endif
 		
 		#result = #loops % 313
