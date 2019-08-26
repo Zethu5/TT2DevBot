@@ -1,7 +1,6 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-// TODO: Fairy commercials player choice
 // TODO: Skills activate choice
 // TODO: Boss Run
 // TODO: Random messeges popping up to take care of if need be (probably will be)
@@ -26,6 +25,13 @@
 #fairy_skills_accept = 1
 #fairy_mana_accept = 1
 #fairy_discount_accept = 0
+
+#hs_skill = 0 
+#ds_skill = 1
+#hm_skill = 1
+#fs_skill = 1
+#wc_skill = 1
+#sc_skill = 0
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -125,6 +131,10 @@
 #fairy_resume_video_y2 = 565
 #fairy_collect_reward_x = 275
 #fairy_collect_reward_y = 685
+#mana_bar_x = 235
+#mana_bar_y = 775
+#skills_y = 855
+#skills_x = 45
 
 
 // Colors:
@@ -169,6 +179,7 @@
 #fairy_accept_commercial_color = -2708696
 #fairy_resume_video_color = -622018
 #fairy_collect_reward_color = -2446036
+#mana_bar_color = -69345
 
 
 // Values:
@@ -206,6 +217,8 @@ goto :start
 	
 	if #retries > 10
 		#retries = 0
+		log game state was not ok
+		toast game state was not ok
 		goto :fun_reset_game
 	endif
 
@@ -414,6 +427,8 @@ goto :start
 	:fun_skills_tab_scroll_up
 		if #repeat_3 > 10
 			#repeat_3 = 0
+			log skills scroll up not ok
+			toast skills scroll up not ok
 			goto :fun_reset_game
 		endif
 		
@@ -502,8 +517,11 @@ goto :start
 	:fun_heroes_tab_scroll_up
 		if #repeat_3 > 10
 			#repeat_3 = 0
+			log heroes scroll up not ok
+			toast heroes scroll up not ok
 			goto :fun_reset_game
 		endif
+		
 		touchDown 0 #scroll_up_x #scroll_up_y
 		sleep 1000
 		#result = #scroll_up_y + 50
@@ -521,7 +539,7 @@ goto :start
 			endif
 		
 		touchUp 0
-		sleep 1500
+		sleep 3000
 		
 		getColor #tmp_color_1 #masteries_inner_circle_x #masteries_inner_circle_y
 		
@@ -710,6 +728,8 @@ goto :start
 	:fairy_commercial_decline
 		if #retries > 10
 			#retries = 0
+			log fairy commercial decline
+			toast fairy commercial decline
 			goto :fun_reset_game
 		endif
 		
@@ -733,6 +753,8 @@ goto :start
 	:fairy_commercial_accept
 		if #retries > 10
 			#retries = 0
+			log fairy commercial accept
+			toast fairy commercial accept
 			goto :fun_reset_game
 		endif
 		
@@ -752,10 +774,12 @@ goto :start
 		:fairy_commercial_wait
 			if #retries > 10
 				#retries = 0
+				log fairy commercial wait
+				toast fairy commercial wait
 				goto :fun_reset_game
 			endif
 		
-			sleep 5000
+			sleep 10000
 			keyPress K_BACK
 			sleep 2000
 			
@@ -781,6 +805,8 @@ goto :start
 		:fairy_collect_reward
 			if #retries > 10
 				#retries = 0
+				log fairy collect reward
+				toast fairy collect reward
 				goto :fun_reset_game
 			endif
 			
@@ -800,9 +826,71 @@ goto :start
 			
 			sleep 5000
 			
+			if #fairy_option == 3
+				goto :fun_fight_boss
+			endif
+			
 			#return_value = 0
 			#checking_if_ok = 1
 			goto :fun_check_everything_ok
+// =======================================================================================================================
+// =======================================================================================================================
+// REUTRN VALUE - 9
+:fun_activate_skills
+	toast [9] Activating skills
+	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+	getColor #tmp_color_2 #mana_bar_x #mana_bar_y
+	
+	if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_1 != #mana_bar_color
+		#return_value = 0
+		#checking_if_ok = 1
+		goto :fun_check_everything_ok
+	endif
+	
+	#result = #skills_x
+	
+	if #hs_skill == 1
+		touchPress 0 #skills_x #result
+		sleep #btn_delay
+	endif
+	
+	#result = #result + 90
+	
+	if #ds_skill == 1
+		touchPress 0 #skills_x #result
+		sleep #btn_delay
+	endif
+	
+	#result = #result + 90
+	
+	if #hm_skill == 1
+		touchPress 0 #skills_x #result
+		sleep #btn_delay
+	endif
+	
+	#result = #result + 90
+	
+	if #fs_skill == 1
+		touchPress 0 #skills_x #result
+		sleep #btn_delay
+	endif
+	
+	#result = #result + 90
+	
+	if #wc_skill == 1
+		touchPress 0 #skills_x #result
+		sleep #btn_delay
+	endif
+	
+	#result = #result + 90
+	
+	if #sc_skill == 1
+		touchPress 0 #skills_x #result
+		sleep #btn_delay
+	endif
+	
+	goto :fun_fight_boss
+	
 // =======================================================================================================================
 // =======================================================================================================================
 :start
@@ -820,9 +908,14 @@ goto :start
 		sleep #hit_delay
 		touchUp 0
 		
-		#result = #loops % 3300
+		#result = #loops % 3351
 		if #result == 0
 			#loops = 1
+			goto :fun_activate_skills
+		endif
+		
+		#result = #loops % 3300
+		if #result == 0
 			goto :fun_upgrade_tap_and_skills
 		endif
 		
@@ -835,7 +928,6 @@ goto :start
 		if #result == 0
 			goto :fun_accept_daily_rewards
 		endif
-		
 		
 		#result = #loops % 800
 		if #result == 0
