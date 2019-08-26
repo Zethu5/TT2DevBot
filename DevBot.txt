@@ -113,10 +113,10 @@
 #fairy_diamonds_y3 = 425
 #fairy_skills_x1 = 120
 #fairy_skills_y1 = 385
-#fairy_skills_x1 = 335
-#fairy_skills_y1 = 325
-#fairy_skills_x1 = 415
-#fairy_skills_y1 = 290
+#fairy_skills_x2 = 335
+#fairy_skills_y2 = 325
+#fairy_skills_x3 = 415
+#fairy_skills_y3 = 290
 #fairy_mana_x1 = 140
 #fairy_mana_y1 = 390
 #fairy_mana_x2 = 260
@@ -302,11 +302,11 @@ goto :start
 		touchUp 0
 	endif
 	
-	#return_value = 2
-	#checking_if_ok = 1
-	goto :fun_check_everything_ok
+	// #return_value = 2
+	// #checking_if_ok = 1
+	// goto :fun_check_everything_ok
 	
-	:return_value_2
+	// :return_value_2
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -334,11 +334,11 @@ goto :start
 		touchUp 0
 	endif
 	
-	#return_value = 3
-	#checking_if_ok = 1
-	goto :fun_check_everything_ok
+	// #return_value = 3
+	// #checking_if_ok = 1
+	// goto :fun_check_everything_ok
 	
-	:return_value_3
+	// :return_value_3
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -361,11 +361,11 @@ goto :start
 		goto :fun_activate_skills
 	endif
 	
-	#return_value = 4
-	#checking_if_ok = 1
-	goto :fun_check_everything_ok
-	
-	:return_value_4
+	// #return_value = 4
+	// #checking_if_ok = 1
+	// goto :fun_check_everything_ok
+ 
+	// :return_value_4
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -384,11 +384,11 @@ goto :start
 		sleep 2000
 	endif
 	
-	#return_value = 5
-	#checking_if_ok = 1
-	goto :fun_check_everything_ok
+	// #return_value = 5
+	// #checking_if_ok = 1
+	// goto :fun_check_everything_ok
 	
-	:return_value_5
+	// :return_value_5
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -832,7 +832,7 @@ goto :start
 			
 			sleep 5000
 			
-			if #fairy_option == 3
+			if #fairy_option == 3 or #fairy_option == 4
 				goto :fun_fight_boss
 			endif
 			
