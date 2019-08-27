@@ -1,7 +1,6 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-// TODO: When upgrading skills, check to see if they are active to not cancel them
 // TODO: Boss Run
 // TODO: Random messeges popping up to take care of if need be (probably will be)
 // TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
@@ -15,7 +14,7 @@
 // x - 330 
 // y - 395 - did touch the item, should be something like 390 mb lower - need to check
 
-:after_reset
+:fun_after_reset
 // -----------------------------------------------------------------------------------------------------------------------
 // Options (0 - False | 1 - True):
 
@@ -136,6 +135,20 @@
 #mana_bar_y = 775
 #skills_y = 855
 #skills_x = 45
+#prestige_x1 = 40
+#prestige_y1 = 870
+#prestige_x2 = 50
+#prestige_y2 = 895
+#prestige_menu_button_x = 450
+#prestige_menu_button_y = 880
+#prestige_second_layout_x1 = 150
+#prestige_second_layout_y1 = 200
+#prestige_second_layout_x2 = 280
+#prestige_second_layout_y2 = 720
+#prestige_third_layout_x1 = 160
+#prestige_third_layout_y1 = 320
+#prestige_third_layout_x2 = 360
+#prestige_third_layout_y2 = 615
 
 
 // Colors:
@@ -154,7 +167,7 @@
 #skills_tab_active_color = -5464966
 #skill_tree_icon_color = 3531516
 #maximize_tab_button_color = 3160133
-#max_upgrade_skill_button_color = 2105734
+#max_upgrade_skill_button_color = 2236808
 #heroes_tab_button_inactive_color = 6379040
 #heroes_tab_button_active_color = 2958364
 #pet_eggs_icon_color = -65793
@@ -183,6 +196,13 @@
 #mana_bar_color1 = -69602
 #mana_bar_color2 = -69345
 #skill_cancel_color = -7970304
+#prestige_color1 = 4793864
+#prestige_color2 = -593169
+#prestige_second_layout_color1 = 7173508
+#prestige_second_layout_color2 = -2446036
+#prestige_third_layout_color1 = 7173250
+#prestige_third_layout_color2 = -2445524
+
 
 
 // Values:
@@ -286,7 +306,7 @@ goto :start
 	
 	toast TT2 reset successfully, starting agane boys!
 	
-	goto :after_reset
+	goto :fun_after_reset
 	
 // =======================================================================================================================
 // =======================================================================================================================
@@ -395,7 +415,6 @@ goto :start
 :fun_upgrade_tap_and_skills
 	toast [6] Upgrading tap + skills
 	:return_value_6
-	// Open skills tab
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
 	if #tmp_color_1 == #skills_tab_passive_color
@@ -902,7 +921,126 @@ goto :start
 	endif
 	
 	goto :fun_fight_boss
+// =======================================================================================================================
+// =======================================================================================================================
+:fun_prestige
+	#repeat = 0
 	
+	:fun_open_skills_tab
+		if #repeat > 10
+			goto :fun_reset_game
+		endif
+	
+		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+		
+		if #tmp_color_1 == #skills_tab_passive_color
+			touchDown 0 #skills_tab_x #skills_tab_y
+			sleep #btn_delay
+			touchUp 0
+		elseif #tmp_color_1 == #skills_tab_active_color
+			goto :fun_scroll_to_prestige
+		else
+			#repeat = #repeat + 1
+			sleep 2000
+			goto :fun_open_skills_tab
+		endif
+		
+		sleep 2000
+		
+	#repeat = 0
+	#repeat_2 = 0
+	
+	:fun_scroll_to_prestige
+		if #repeat_2 > 10
+			#repeat_2 = 0
+			goto :fun_reset_game
+		endif
+	
+		touchDown 0 #scroll_up_x #scroll_down_y
+		sleep 1000
+		#result = #scroll_down_y - 50
+		
+		:fun_scroll_to_prestige_loop
+			touchMove 0 #scroll_up_x #result
+			sleep 30
+			
+			if #repeat < 10
+				#result = #result - 50
+				#repeat = #repeat + 1
+				goto :fun_scroll_to_prestige_loop
+			else
+				#repeat = 0
+			endif
+		
+		touchUp 0
+		sleep 2000
+		
+		getColor #tmp_color_1 #prestige_x1 #prestige_y1
+		getColor #tmp_color_2 #prestige_x2 #prestige_y2
+		
+		if #tmp_color_1 != #prestige_color1 or #tmp_color_2 != #prestige_color2
+			#repeat_2 = #repeat_2 + 1
+			goto :fun_scroll_to_prestige
+		endif
+		
+	#repeat = 0
+		
+	:fun_click_first_prestige
+		if #repeat > 10
+			#repeat = 0
+			goto :fun_reset_game
+		endif
+		
+		touchPress 0 #prestige_menu_button_x #prestige_menu_button_y
+		sleep 2000
+		
+		getColor #tmp_color_1 #prestige_second_layout_x1 #prestige_second_layout_y1
+		getColor #tmp_color_2 #prestige_second_layout_x2 #prestige_second_layout_y2
+		
+		if #tmp_color_1 != #prestige_second_layout_color1 or #tmp_color_2 != #prestige_second_layout_color2
+			#repeat = #repeat + 1
+			goto :fun_click_first_prestige
+		endif
+		
+	#repeat = 0
+	#repeat_2 = 0	
+	
+	:fun_click_second_prestige
+		if #repeat > 10
+			#repeat = 0
+			goto :fun_reset_game
+		endif
+		
+		touchPress 0 #prestige_second_layout_x2 #prestige_second_layout_y2
+		sleep 2000
+		
+		getColor #tmp_color_1 #prestige_third_layout_x1 #prestige_third_layout_y1
+		getColor #tmp_color_2 #prestige_third_layout_x2 #prestige_third_layout_y2
+		
+		if #tmp_color_1 != #prestige_third_layout_color1 or #tmp_color_2 != #prestige_third_layout_color2
+			#repeat = #repeat + 1
+			goto :fun_click_second_prestige
+		endif
+		
+	:fun_click_third_prestige
+		if #repeat_2 > 10
+			#repeat_2 = 0
+			goto :fun_reset_game
+		endif
+		
+		touchPress 0 #prestige_third_layout_x2 #prestige_third_layout_y2
+		
+		getColor #tmp_color_1 #prestige_third_layout_x1 #prestige_third_layout_y1
+		getColor #tmp_color_2 #prestige_third_layout_x2 #prestige_third_layout_y2
+		
+		if #tmp_color_1 == #prestige_third_layout_color1 and #tmp_color_2 == #prestige_third_layout_color2
+			#repeat_2 = #repeat_2 + 1
+			goto :fun_click_third_prestige
+		endif
+		
+		sleep 15000
+		
+	goto :fun_after_reset
 // =======================================================================================================================
 // =======================================================================================================================
 :start
