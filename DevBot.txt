@@ -180,7 +180,8 @@
 #fairy_accept_commercial_color = -2708696
 #fairy_resume_video_color = -622018
 #fairy_collect_reward_color = -2446036
-#mana_bar_color = -69602
+#mana_bar_color1 = -69602
+#mana_bar_color2 = -69345
 
 
 // Values:
@@ -351,7 +352,7 @@ goto :start
 	
 	getColor #tmp_color_1 #mana_bar_x #mana_bar_y
 	
-	if #tmp_color_1 == #mana_bar_color
+	if #tmp_color_1 == #mana_bar_color1 or #tmp_color_1 == mana_bar_color2
 		goto :fun_activate_skills
 	endif
 	
@@ -845,7 +846,7 @@ goto :start
 	toast [9] Activating skills
 	getColor #tmp_color_1 #mana_bar_x #mana_bar_y
 	
-	if #tmp_color_1 != #mana_bar_color
+	if #tmp_color_1 != #mana_bar_color1 and #tmp_color_1 != #mana_bar_color2
 		#return_value = 0
 		#checking_if_ok = 1
 		goto :fun_check_everything_ok
