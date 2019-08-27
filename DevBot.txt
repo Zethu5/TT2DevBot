@@ -566,7 +566,7 @@ goto :start
 	#repeat = 0
 	#result = #upgrade_heroes_y
 	
-	if #number_of_times_upgraded_heroes > 3
+	if #number_of_times_upgraded_heroes > 1
 		goto :func_close_heroes_tab
 	endif
 	
