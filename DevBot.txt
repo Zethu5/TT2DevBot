@@ -1,7 +1,7 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-// TODO: Skills activate choice
+// TODO: When upgrading skills, check to see if they are active to not cancel them
 // TODO: Boss Run
 // TODO: Random messeges popping up to take care of if need be (probably will be)
 // TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
@@ -68,7 +68,7 @@
 #scroll_down_y = 900
 #maximize_tab_button_x = 430
 #maximize_tab_button_y = 530
-#skills_tab_upgrade_button_x = 460
+#skills_tab_upgrade_button_x = 515
 #skills_tab_upgrade_button_y = 150
 #skills_tab_max_upgrade_button_x = 275
 #heroes_tab_button_x = 135
@@ -182,6 +182,7 @@
 #fairy_collect_reward_color = -2446036
 #mana_bar_color1 = -69602
 #mana_bar_color2 = -69345
+#skill_cancel_color = -7970304
 
 
 // Values:
@@ -224,6 +225,8 @@ goto :start
 		toast game state was not ok
 		goto :fun_reset_game
 	endif
+	
+	sleep 2000
 
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
@@ -465,11 +468,15 @@ goto :start
 		sleep #btn_delay
 		
 		#repeat = 0
-		#result = #skills_tab_upgrade_button_y + 90
+		#result = #skills_tab_upgrade_button_y + 95
 		
 		:fun_skills_tab_upgrade_press
-			touchPress 0 #skills_tab_upgrade_button_x #result
-			sleep #btn_delay
+			getColor #tmp_color_1 #skills_tab_upgrade_button_x #result
+			
+			if #tmp_color_1 != #skill_cancel_color
+				touchPress 0 #skills_tab_upgrade_button_x #result
+				sleep #btn_delay
+			endif
 			
 			getColor #tmp_color_1 #skills_tab_max_upgrade_button_x #result
 			
