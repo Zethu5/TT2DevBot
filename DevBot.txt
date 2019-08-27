@@ -5,7 +5,7 @@
 // TODO: Boss Run
 // TODO: Random messeges popping up to take care of if need be (probably will be)
 // TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
-
+// TODO: Mana bar color check should not be on the blue-ish color but on the white color at the end - will save multiple color variables for the mana bar
 
 // METADATA:
 // 26/8/2019 - 21.2 loops per second
