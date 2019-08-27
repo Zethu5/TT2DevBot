@@ -202,6 +202,7 @@
 #prestige_second_layout_color2 = -2446036
 #prestige_third_layout_color1 = 7173250
 #prestige_third_layout_color2 = -2445524
+#white_color = -65793
 
 
 
@@ -221,6 +222,7 @@
 #fairy_option = 0
 #fairy_mana_commercial_approve = 0
 #number_of_times_upgraded_heroes = 0
+#activated_skills = 0 
 
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -920,7 +922,17 @@ goto :start
 		sleep #btn_delay
 	endif
 	
-	goto :fun_fight_boss
+	if #activated_skills == 0
+		#activated_skills = 1
+	else
+		#activated_skills = 0
+	endif
+	
+	if #activated_skills == 1 
+		goto :fun_fight_boss
+	else
+		goto :start
+	endif
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_prestige
@@ -1043,6 +1055,41 @@ goto :start
 	goto :fun_after_reset
 // =======================================================================================================================
 // =======================================================================================================================
+:fun_check_level
+	getColor #tmp_color_1 248 49
+	getColor #tmp_color_2 250 48
+	getColor #tmp_color_3 250 50
+	
+	if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+		goto :start
+	endif
+	
+	getColor #tmp_color_1 250 52
+	getColor #tmp_color_2 249 56
+	getColor #tmp_color_3 261 48
+	
+	if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+		goto :start
+	endif
+	
+	getColor #tmp_color_1 261 51
+	getColor #tmp_color_2 261 53
+	getColor #tmp_color_3 261 55
+	
+	if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+		goto :start
+	endif
+	
+	getColor #tmp_color_1 257 56
+	
+	if #tmp_color_1 != #white_color
+		goto :start
+	endif
+	
+	goto :fun_prestige
+	
+// =======================================================================================================================
+// =======================================================================================================================
 :start
 	:fun_click_screen
 		rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
@@ -1065,6 +1112,11 @@ goto :start
 			goto :fun_close_welcome_back_screen
 		endif
 		
+		#result = #loops % 1491
+		if #result == 0
+			goto :fun_check_level
+		endif	
+
 		#result = #loops % 913
 		if #result == 0
 			goto :fun_accept_daily_rewards
