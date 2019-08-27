@@ -180,7 +180,7 @@
 #fairy_accept_commercial_color = -2708696
 #fairy_resume_video_color = -622018
 #fairy_collect_reward_color = -2446036
-#mana_bar_color = -69345
+#mana_bar_color = -69602
 
 
 // Values:
@@ -919,11 +919,6 @@ goto :start
 			goto :fun_close_welcome_back_screen
 		endif
 		
-		#result = #loops % 1001
-		if #result == 0
-			goto :fun_activate_skills
-		endif
-		
 		#result = #loops % 913
 		if #result == 0
 			goto :fun_accept_daily_rewards
@@ -944,6 +939,11 @@ goto :start
 			#return_value = 0
 			#checking_if_ok = 1
 			goto :fun_check_everything_ok
+		endif
+		
+		#result = #loops % 399
+		if #result == 0
+			goto :fun_activate_skills
 		endif
 		
 		#result = #loops % 313
