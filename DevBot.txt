@@ -15,10 +15,11 @@
 // x - 330 
 // y - 395 - did touch the item, should be something like 390 mb lower - need to check
 
+:after_reset
 // -----------------------------------------------------------------------------------------------------------------------
 // Options (0 - False | 1 - True):
 
-#upgrade_on_start = 0
+#upgrade_on_start = 1
 
 #fairy_gold_accept = 0
 #fairy_diamonds_accept = 1
@@ -197,6 +198,7 @@
 #checking_if_ok = 0
 #fairy_option = 0
 #fairy_mana_commercial_approve = 0
+#number_of_times_upgraded_heroes = 0
 
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -280,13 +282,7 @@ goto :start
 	
 	toast TT2 reset successfully, starting agane boys!
 	
-	#return_value = 1
-	#checking_if_ok = 1
-	goto :fun_check_everything_ok
-	
-	:return_value_1
-	goto :start
-	
+	goto :after_reset
 	
 // =======================================================================================================================
 // =======================================================================================================================
@@ -318,20 +314,18 @@ goto :start
 	getColor #tmp_color_2 #daily_rewards_icon_left_ribbon_x #daily_rewards_icon_left_ribbon_y
 	
 	if #tmp_color_1 == #daily_rewards_icon_right_ribbon_color and #tmp_color_2 == #daily_rewards_icon_left_ribbon_color
-		touchDown 0 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
+		touchPress 0 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
 		sleep #btn_delay
-		touchUp 0
 	endif
 	
-	sleep 1000
+	sleep 2000
 	
 	getColor #tmp_color_1 #daily_rewards_top_bar_x #daily_rewards_top_bar_y
 	getColor #tmp_color_2 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
 	
 	if #tmp_color_1 == #daily_rewards_top_bar_color and #tmp_color_2 == #daily_rewards_collect_button_color
-		touchDown 0 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
+		touchPress 0 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
 		sleep #btn_delay
-		touchUp 0
 	endif
 	
 	// #return_value = 3
@@ -500,9 +494,8 @@ goto :start
 	toast [7] Upgrading heroes
 	:return_value_7
 	
-	touchDown 0 #heroes_tab_button_x #heroes_tab_button_y
+	touchPress 0 #heroes_tab_button_x #heroes_tab_button_y
 	sleep #btn_delay
-	touchUp 0
 	
 	getColor #tmp_color_1 #heroes_tab_button_x #heroes_tab_button_y
 	
@@ -572,6 +565,10 @@ goto :start
 	#repeat = 0
 	#result = #upgrade_heroes_y
 	
+	if #number_of_times_upgraded_heroes > 3
+		goto :func_close_heroes_tab
+	endif
+	
 	:fun_heroes_tab_scroll_down
 		touchDown 0 230 700
 		sleep 1000
@@ -626,6 +623,8 @@ goto :start
 			touchPress 0 #close_tab_button_x #close_tab_button_y
 			sleep #btn_delay
 		endif
+		
+		#number_of_times_upgraded_heroes = #number_of_times_upgraded_heroes + 1
 		
 		#return_value = 72
 		#checking_if_ok = 1
@@ -920,14 +919,14 @@ goto :start
 			goto :fun_close_welcome_back_screen
 		endif
 		
-		#result = #loops % 2000
-		if #result == 0
-			goto :fun_accept_daily_rewards
-		endif
-		
 		#result = #loops % 1001
 		if #result == 0
 			goto :fun_activate_skills
+		endif
+		
+		#result = #loops % 913
+		if #result == 0
+			goto :fun_accept_daily_rewards
 		endif
 		
 		#result = #loops % 800
