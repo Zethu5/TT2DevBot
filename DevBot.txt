@@ -257,7 +257,7 @@ goto :start
 		#retries = 0
 	endif
 	
-	if #retries > 10
+	if #retries > 5
 		#retries = 0
 		log game state was not ok
 		toast game state was not ok
