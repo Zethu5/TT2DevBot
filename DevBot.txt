@@ -834,7 +834,7 @@ goto :start
 			getColor #tmp_color_1 #commercial_x_button_x #commercial_x_button_y
 			getColor #tmp_color_2 #commercial_bg_x #commercial_bg_y
 			
-			if #tmp_color_1 != #tmp_color_2 and #retries > 3
+			if #tmp_color_1 != #tmp_color_2 and #retries > 2
 				touchPress 0 #commercial_x_button_x #commercial_x_button_y
 				sleep #btn_delay
 				sleep 2000
