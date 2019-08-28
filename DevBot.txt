@@ -10,9 +10,15 @@
 // 26/8/2019 - 21.2 loops per second
 
 // NOTES:
-// NOT TOUCHING FALLEN ITEMS
-// x - 330 
-// y - 395 - did touch the item, should be something like 390 mb lower - need to check
+// TITANS HIT LOCATIONS:
+// 270 340 - HEAD
+// 270 470 - STOMACH
+// 80  330 - LEFT SHOULDER
+// 460 330 - RIGHT SHOULDER
+// 80  530 - LEFT HAND
+// 460 530 - RIGHT HAND
+// 180 670 - LEFT LEG
+// 360 670 - RIGHT LEG
 
 :fun_after_reset
 // -----------------------------------------------------------------------------------------------------------------------
@@ -157,6 +163,8 @@
 #commercial_x_button_y = 36
 #commercial_bg_x = 300
 #commercial_bg_y = 30
+#tab_top_bar_x = 250
+#tab_top_bar_y = 40
 
 
 // Colors:
@@ -212,6 +220,7 @@
 #prestige_third_layout_color1 = 7173250
 #prestige_third_layout_color2 = -2445524
 #white_color = -65793
+#tab_top_bar_color = 5000276
 
 
 
@@ -227,7 +236,6 @@
 #repeat_3 = 0
 #return_value = 0
 #retries = 0
-#checking_if_ok = 0
 #fairy_option = 0
 #fairy_mana_commercial_approve = 0
 #number_of_times_upgraded_heroes = 0
@@ -246,42 +254,41 @@ goto :start
 // =======================================================================================================================
 // Checks if the game state is ok
 :fun_check_everything_ok
-	toast [0] Checking game state [#loops]
-	if #check_if_fairy_commercial == 0
-		#check_if_fairy_commercial = 1
-		goto :fun_fairy_commercials
-	endif
+	#retries = 0
+	
+	:fun_recheck_state
+		toast [0] Checking game state [#loops]
+		if #check_if_fairy_commercial == 0
+			#check_if_fairy_commercial = 1
+			goto :fun_fairy_commercials
+		endif
+		
+		if #retries > 5
+			#retries = 0
+			log game state was not ok
+			toast game state was not ok
+			goto :fun_reset_game
+		endif
+		
+		sleep 2000
 
-	if #checking_if_ok == 1
-		#checking_if_ok = 0
-		#retries = 0
-	endif
-	
-	if #retries > 5
-		#retries = 0
-		log game state was not ok
-		toast game state was not ok
-		goto :fun_reset_game
-	endif
-	
-	sleep 2000
-
-	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
-	getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
-	
-	if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #skills_tab_bg_passive_color
-		sleep 3000
-	endif
-	
-	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
-	getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
-	
-	if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #skills_tab_bg_passive_color
-		keyPress K_BACK
-		sleep 1000
-		#retries = #retries + 1
-		goto :fun_check_everything_ok
-	endif
+		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+		getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
+		getColor #tmp_color_3 #tab_top_bar_x #tab_top_bar_y
+		
+		if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #skills_tab_bg_passive_color or #tmp_color_3 == #tab_top_bar_color
+			sleep 3000
+		endif
+		
+		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+		getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
+		
+		if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #skills_tab_bg_passive_color or #tmp_color_3 == #tab_top_bar_color
+			keyPress K_BACK
+			sleep 1000
+			#retries = #retries + 1
+			goto :fun_recheck_state
+		endif
 	
 	#check_if_fairy_commercial = 0
 	#retries = 0
@@ -430,7 +437,6 @@ goto :start
 		touchUp 0
 	elseif #tmp_color_1 != #skills_tab_active_color
 		#return_value = 6
-		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 	endif
 	
@@ -535,7 +541,6 @@ goto :start
 	
 	if #tmp_color_1 != #heroes_tab_button_active_color and #tmp_color_1 != #heroes_tab_button_inactive_color
 		#return_value = 7
-		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 	endif
 	
@@ -661,7 +666,6 @@ goto :start
 		#number_of_times_upgraded_heroes = #number_of_times_upgraded_heroes + 1
 		
 		#return_value = 72
-		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 		
 		:return_value_72
@@ -746,7 +750,6 @@ goto :start
 			goto :commercial_option
 		else
 			#return_value = 0
-			#checking_if_ok = 1
 			goto :fun_check_everything_ok
 		endif
 	
@@ -779,7 +782,6 @@ goto :start
 			sleep #btn_delay
 			
 			#return_value = 0
-			#checking_if_ok = 1
 			goto :fun_check_everything_ok
 		else
 			#retries = #retries + 1
@@ -881,7 +883,6 @@ goto :start
 			endif
 			
 			#return_value = 0
-			#checking_if_ok = 1
 			goto :fun_check_everything_ok
 // =======================================================================================================================
 // =======================================================================================================================
@@ -892,7 +893,6 @@ goto :start
 	
 	if #tmp_color_1 != #mana_bar_color1 and #tmp_color_1 != #mana_bar_color2
 		#return_value = 0
-		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 	endif
 	
@@ -1157,7 +1157,6 @@ goto :start
 		#result = #loops % 499
 		if #result == 0
 			#return_value = 0
-			#checking_if_ok = 1
 			goto :fun_check_everything_ok
 		endif
 		
