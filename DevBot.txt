@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------------------------------------------------
 // Options (0 - False | 1 - True):
 
-#upgrade_on_start = 1
+#upgrade_on_start = 0
 
 #fairy_gold_accept = 0
 #fairy_diamonds_accept = 1
@@ -33,7 +33,7 @@
 #wc_skill = 1
 #sc_skill = 0
 
-#auto_prestige = 1
+#auto_prestige = 0
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -225,6 +225,7 @@
 #fairy_mana_commercial_approve = 0
 #number_of_times_upgraded_heroes = 0
 #activated_skills = 0 
+#check_if_fairy_commercial = 0
 
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -238,6 +239,13 @@ goto :start
 // =======================================================================================================================
 // Checks if the game state is ok
 :fun_check_everything_ok
+	if #check_if_fairy_commercial == 0
+		#check_if_fairy_commercial = 1
+		goto :fun_fairy_commercials
+	endif
+	
+	#check_if_fairy_commercial = 0
+
 	if #checking_if_ok == 1
 		#checking_if_ok = 0
 		#retries = 0
@@ -252,6 +260,12 @@ goto :start
 	
 	sleep 2000
 
+	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+	
+	if #tmp_color_1 != #skills_tab_passive_color
+		sleep 3000
+	endif
+	
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
 	if #tmp_color_1 != #skills_tab_passive_color
@@ -326,11 +340,6 @@ goto :start
 		touchUp 0
 	endif
 	
-	// #return_value = 2
-	// #checking_if_ok = 1
-	// goto :fun_check_everything_ok
-	
-	// :return_value_2
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -356,11 +365,6 @@ goto :start
 		sleep #btn_delay
 	endif
 	
-	// #return_value = 3
-	// #checking_if_ok = 1
-	// goto :fun_check_everything_ok
-	
-	// :return_value_3
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -383,11 +387,6 @@ goto :start
 		goto :fun_activate_skills
 	endif
 	
-	// #return_value = 4
-	// #checking_if_ok = 1
-	// goto :fun_check_everything_ok
- 
-	// :return_value_4
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
@@ -406,11 +405,6 @@ goto :start
 		sleep 2000
 	endif
 	
-	// #return_value = 5
-	// #checking_if_ok = 1
-	// goto :fun_check_everything_ok
-	
-	// :return_value_5
 	goto :start
 // =======================================================================================================================
 // =======================================================================================================================
