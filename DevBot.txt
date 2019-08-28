@@ -60,6 +60,8 @@
 #fight_boss_button_bg_y = 60
 #skills_tab_x = 50
 #skills_tab_y = 940
+#skills_tab_bg_x = 20
+#skills_tab_bg_y = 940
 #skill_tree_icon_x = 140
 #skill_tree_icon_y_minimized = 590
 #skill_tree_icon_y_maximized = 75
@@ -170,6 +172,7 @@
 #fight_boss_button_icon_color = 266788
 #fight_boss_button_bg_color = 1071599
 #skills_tab_passive_color = 2112406
+#skills_tab_bg_passive_color = 3958771
 #skills_tab_active_color = -5464966
 #skill_tree_icon_color = 3531516
 #maximize_tab_button_color = 3160133
@@ -243,6 +246,7 @@ goto :start
 // =======================================================================================================================
 // Checks if the game state is ok
 :fun_check_everything_ok
+	toast [0] Checking game state [#loops]
 	if #check_if_fairy_commercial == 0
 		#check_if_fairy_commercial = 1
 		goto :fun_fairy_commercials
@@ -263,14 +267,16 @@ goto :start
 	sleep 2000
 
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+	getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
 	
-	if #tmp_color_1 != #skills_tab_passive_color
+	if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_1 != #skills_tab_bg_passive_color
 		sleep 3000
 	endif
 	
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+	getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
 	
-	if #tmp_color_1 != #skills_tab_passive_color
+	if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_1 != #skills_tab_bg_passive_color
 		keyPress K_BACK
 		sleep 1000
 		#retries = #retries + 1
