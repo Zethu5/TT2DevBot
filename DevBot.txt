@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------------------------------------------------
 // Options (0 - False | 1 - True):
 
-#upgrade_on_start = 0
+#upgrade_on_start = 1
 
 #fairy_gold_accept = 0
 #fairy_diamonds_accept = 1
@@ -33,7 +33,7 @@
 #wc_skill = 1
 #sc_skill = 0
 
-#auto_prestige = 0
+#auto_prestige = 1
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -334,7 +334,7 @@ goto :start
 // Close the 'Welcome Back!' screen when re-logging
 // REUTRN VALUE - 2
 :fun_close_welcome_back_screen
-	toast [2] Checking welcome back msg
+	toast [2] Checking welcome back msg [#loops]
 	getColor #tmp_color_1 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
 	
 	if #tmp_color_1 == #welcome_back_screen_collect_button_color
@@ -349,7 +349,7 @@ goto :start
 // Accept the daily rewards given
 // REUTRN VALUE - 3
 :fun_accept_daily_rewards
-	toast [3]  Checking daily rewards
+	toast [3] Checking daily rewards [#loops]
 	getColor #tmp_color_1 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
 	getColor #tmp_color_2 #daily_rewards_icon_left_ribbon_x #daily_rewards_icon_left_ribbon_y
 	
@@ -374,7 +374,7 @@ goto :start
 // Click the 'FIGHT BOSS' button if one exist
 // REUTRN VALUE - 4
 :fun_fight_boss
-	toast [4] Checking fight boss button
+	toast [4] Checking fight boss button [#loops]
 	getColor #tmp_color_1 #fight_boss_button_icon_x #fight_boss_button_icon_y
 	getColor #tmp_color_2 #fight_boss_button_bg_x #fight_boss_button_bg_y
 	
@@ -396,7 +396,7 @@ goto :start
 // Check for pet eggs
 // REUTRN VALUE - 5
 :fun_check_pet_eggs
-	toast [5] Checking pet eggs msg
+	toast [5] Checking pet eggs msg [#loops]
 	getColor #tmp_color_1 #pet_eggs_icon_x #pet_eggs_icon_y
 	
 	if #tmp_color_1 == #pet_eggs_icon_color
@@ -414,7 +414,7 @@ goto :start
 // Upgrade tap damage and skills
 // REUTRN VALUE - 6
 :fun_upgrade_tap_and_skills
-	toast [6] Upgrading tap + skills
+	toast [6] Upgrading tap + skills [#loops]
 	:return_value_6
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
@@ -519,7 +519,7 @@ goto :start
 // Upgrade heroes
 // REUTRN VALUE - 7
 :fun_upgrade_heroes
-	toast [7] Upgrading heroes
+	toast [7] Upgrading heroes [#loops]
 	:return_value_7
 	
 	touchPress 0 #heroes_tab_button_x #heroes_tab_button_y
@@ -664,7 +664,7 @@ goto :start
 // =======================================================================================================================
 // REUTRN VALUE - 8
 :fun_fairy_commercials
-	toast [8] Checking fairy commercials
+	toast [8] Checking fairy commercials [#loops]
 	
 	getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 	
@@ -881,7 +881,7 @@ goto :start
 // =======================================================================================================================
 // REUTRN VALUE - 9
 :fun_activate_skills
-	toast [9] Activating skills
+	toast [9] Checking mana bar [#loops]
 	getColor #tmp_color_1 #mana_bar_x #mana_bar_y
 	
 	if #tmp_color_1 != #mana_bar_color1 and #tmp_color_1 != #mana_bar_color2
@@ -889,6 +889,8 @@ goto :start
 		#checking_if_ok = 1
 		goto :fun_check_everything_ok
 	endif
+	
+	toast [9] Activating skills [#loops]
 	
 	#result = #skills_x
 	
@@ -1066,36 +1068,39 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_check_level
-	toast [10] Checking level 13k+
-	getColor #tmp_color_1 248 49
-	getColor #tmp_color_2 250 48
-	getColor #tmp_color_3 250 50
+	toast [10] Checking level 14k+ [#loops]
+	:fun_letter_one
+		getColor #tmp_color_1 248 49
+		getColor #tmp_color_2 250 48
+		getColor #tmp_color_3 250 50
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :start
+		endif
+		
+		getColor #tmp_color_1 250 52
+		getColor #tmp_color_2 249 56
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 or #tmp_color_2 != #white_color
+			goto :start
+		endif
 	
-	if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
-		goto :start
-	endif
-	
-	getColor #tmp_color_1 250 52
-	getColor #tmp_color_2 249 56
-	getColor #tmp_color_3 262 48
-	
-	if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
-		goto :start
-	endif
-	
-	getColor #tmp_color_1 261 51
-	getColor #tmp_color_2 261 53
-	getColor #tmp_color_3 261 55
-	
-	if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
-		goto :start
-	endif
-	
-	getColor #tmp_color_1 257 56
-	
-	if #tmp_color_1 != #white_color
-		goto :start
-	endif
+	:fun_letter_four
+		getColor #tmp_color_1 261 57
+		getColor #tmp_color_2 259 55
+		getColor #tmp_color_3 255 55
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :start
+		endif
+		
+		getColor #tmp_color_1 262 51
+		getColor #tmp_color_2 261 48
+		getColor #tmp_color_3 258 52
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :start
+		endif
 	
 	goto :fun_prestige
 	
