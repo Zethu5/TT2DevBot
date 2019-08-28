@@ -247,8 +247,6 @@ goto :start
 		#check_if_fairy_commercial = 1
 		goto :fun_fairy_commercials
 	endif
-	
-	#check_if_fairy_commercial = 0
 
 	if #checking_if_ok == 1
 		#checking_if_ok = 0
@@ -279,6 +277,7 @@ goto :start
 		goto :fun_check_everything_ok
 	endif
 	
+	#check_if_fairy_commercial = 0
 	#retries = 0
 	
 	if #return_value == 0
