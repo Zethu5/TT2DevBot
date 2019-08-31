@@ -589,7 +589,6 @@ goto :start
 	:fun_heroes_after_scroll_up
 		
 	#repeat = 0
-	#repeat_2 = 0
 	#result = #upgrade_heroes_y
 	
 	:fun_heroes_tab_click_upgrade
@@ -603,57 +602,6 @@ goto :start
 	
 	#repeat = 0
 	#result = #upgrade_heroes_y
-	
-	if #number_of_times_upgraded_heroes > 1
-		goto :func_close_heroes_tab
-	endif
-	
-	:fun_heroes_tab_scroll_down
-		touchDown 0 230 700
-		sleep 1000
-		touchMove 0 230 695
-		sleep 50
-		touchMove 0 230 690
-		sleep 50
-		touchMove 0 230 670
-		sleep 50
-		touchMove 0 230 650
-		sleep 50
-		touchMove 0 230 610
-		sleep 50
-		touchMove 0 230 570
-		sleep 50
-		touchMove 0 230 490
-		sleep 50
-		touchMove 0 230 410
-		sleep 50
-		touchMove 0 230 340
-		sleep 50
-		touchMove 0 230 270
-		sleep 50
-		touchMove 0 230 220
-		sleep 50
-		touchMove 0 230 175
-		sleep 50
-		touchMove 0 230 135
-		sleep 50
-		touchMove 0 230 105
-		sleep 50
-		touchMove 0 230 95
-		sleep 50
-		touchMove 0 230 90
-		sleep 50
-		touchMove 0 230 90
-		sleep 50
-		touchMove 0 230 90
-		sleep 300
-		touchUp 0
-
-		
-		if #repeat_2 < 4
-			#repeat_2 = #repeat_2 + 1
-			goto :fun_heroes_tab_click_upgrade
-		endif
 		
 	:func_close_heroes_tab
 		getColor #tmp_color_1 #close_tab_button_x #close_tab_button_y
