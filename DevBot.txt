@@ -165,6 +165,33 @@
 #commercial_bg_y = 30
 #tab_top_bar_x = 250
 #tab_top_bar_y = 40
+#boss_raid_icon_y = 25
+#boss_raid_icon_x1 = 90
+#boss_raid_icon_x2 = 95
+#boss_raid_exclamation_mark_x = 78
+#boss_raid_exclamation_mark_y = 870
+#boss_raid_fight_button_x = 390
+#boss_raid_fight_button_y = 830
+#boss_raid_fight_confirm_button_x = 350
+#boss_raid_fight_confirm_button_y = 620
+#boss_raid_fight_timer_bg_x = 111
+#boss_raid_fight_timer_bg_y = 121
+#boss_raid_head_x = 270
+#boss_raid_head_y = 340
+#boss_raid_stomach_x = 270
+#boss_raid_stomach_y = 470
+#boss_raid_lshoulder_x = 80
+#boss_raid_lshoulder_y = 330
+#boss_raid_rshoulder_x = 460
+#boss_raid_rshoulder_y = 330
+#boss_raid_lhand_x = 80
+#boss_raid_lhand_y = 530
+#boss_raid_rhand_x = 460
+#boss_raid_rhand_y = 530
+#boss_raid_lleg_x = 180
+#boss_raid_lleg_y = 670
+#boss_raid_rleg_x = 360
+#boss_raid_rleg_y = 670
 
 
 // Colors:
@@ -221,6 +248,11 @@
 #prestige_third_layout_color2 = -2445524
 #white_color = -65793
 #tab_top_bar_color = 5000276
+#boss_raid_icon_color1 = 4541565
+#boss_raid_icon_color2 = 3948401
+#boss_raid_exclamation_mark_color = 541167
+#boss_raid_fight_button_color = -4018432
+#boss_raid_fight_timer_bg_color = 0
 
 
 
@@ -1058,6 +1090,115 @@ goto :start
 	
 	goto :fun_prestige
 	
+// =======================================================================================================================
+// =======================================================================================================================
+// ISN'T USED YET, NEED TO HAVE MORE CARDS FOR A 4-TIME ATTACK, WILL BE AUTOMATIC IN THE FUTURE - DO NOT REMOVE YET
+:fun_boss_raid
+	#repeat = 0
+
+	:fun_open_clan_chat
+		if #repeat > 5
+			#repeat = 0
+			goto :fun_reset_game
+		endif
+		
+		getColor #tmp_color_1 #boss_raid_icon_x1 #boss_raid_icon_y
+		getColor #tmp_color_2 #boss_raid_icon_x2 #boss_raid_icon_y
+		
+		if #tmp_color_1 != #boss_raid_icon_color1 or #tmp_color_2 != #boss_raid_icon_color2
+			goto :start
+		endif
+		
+		touchPress 0 #boss_raid_icon_x1 #boss_raid_icon_y
+		sleep 2000
+		
+		getColor #tmp_color_1 #boss_raid_exclamation_mark_x #boss_raid_exclamation_mark_y
+		
+		if #tmp_color_1 != #boss_raid_exclamation_mark_color
+			#repeat = #repeat + 1
+			goto :fun_open_clan_chat
+		endif
+		
+	#repeat = 0
+		
+	:fun_open_clan_raid
+		if #repeat > 5
+			#repeat = 0
+			goto :fun_reset_game
+		endif
+		
+		touchPress 0 #boss_raid_exclamation_mark_x #boss_raid_exclamation_mark_y
+		sleep 2000
+		
+		getColor #tmp_color_1 #boss_raid_fight_button_x #boss_raid_fight_button_y
+		
+		if #tmp_color_1 != #boss_raid_fight_button_color
+			#repeat = #repeat + 1
+			goto :fun_open_clan_raid
+		endif
+		
+	#repeat = 0
+	#repeat_2 = 0
+		
+	:fun_boss_raid_start_fight
+		if #repeat > 5 or #repeat_2 > 5
+			#repeat = 0
+			goto :fun_reset_game
+		endif
+		
+		touchPress 0 #boss_raid_fight_button_x #boss_raid_fight_button_y
+		sleep 2000
+		
+		getColor #tmp_color_1 #boss_raid_fight_confirm_button_x #boss_raid_fight_confirm_button_x
+		
+		if #tmp_color_1 != #boss_raid_fight_button_color
+			#repeat = #repeat + 1
+			goto :fun_boss_raid_start_fight
+		endif
+		
+		touchPress 0 #boss_raid_fight_confirm_button_x #boss_raid_fight_confirm_button_y
+		sleep #btn_delay
+		sleep 3000
+		
+		getColor #tmp_color_1 #boss_raid_fight_timer_bg_x #boss_raid_fight_timer_bg_y
+		
+		if #tmp_color_1 != #boss_raid_fight_timer_bg_color
+			#repeat_2 = #repeat_2 + 1
+			goto :fun_boss_raid_start_fight
+		endif
+	
+	:fun_boss_raid_fight
+		touchDown 0 #boss_raid_head_x #boss_raid_head_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_stomach_x #boss_raid_stomach_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_lshoulder_x #boss_raid_lshoulder_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_rshoulder_x #boss_raid_rshoulder_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_lhand_x #boss_raid_lhand_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_rhand_x #boss_raid_rhand_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_lleg_x #boss_raid_lleg_y
+		sleep #hit_delay
+		touchUp 0
+		
+		touchDown 0 #boss_raid_rleg_x #boss_raid_rleg_y
+		sleep #hit_delay
+		touchUp 0
 // =======================================================================================================================
 // =======================================================================================================================
 :start
