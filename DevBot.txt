@@ -1245,11 +1245,6 @@ goto :start
 		if #result == 0
 			goto :fun_close_welcome_back_screen
 		endif
-		
-		#result = #loops % 1491
-		if #result == 0 and #auto_prestige == 1
-			goto :fun_check_level
-		endif	
 
 		#result = #loops % 913
 		if #result == 0
@@ -1260,6 +1255,11 @@ goto :start
 		if #result == 0
 			goto :fun_check_pet_eggs
 		endif
+		
+		#result = #loops % 763
+		if #result == 0 and #auto_prestige == 1
+			goto :fun_check_level
+		endif	
 		
 		#result = #loops % 520
 		if #result == 0
