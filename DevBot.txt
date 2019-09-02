@@ -277,6 +277,11 @@
 
 // -----------------------------------------------------------------------------------------------------------------------
 
+if #game_reset == 1
+	#game_reset = 0
+	goto :fun_check_level
+endif
+
 if #upgrade_on_start == 1
 	goto :fun_upgrade_tap_and_skills
 endif
@@ -371,6 +376,8 @@ goto :start
 	sleep 20000
 	
 	toast TT2 reset successfully, starting agane boys!
+	
+	#game_reset = 1
 	
 	goto :fun_after_reset
 	
@@ -1085,6 +1092,22 @@ goto :start
 		getColor #tmp_color_3 258 52
 		
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :start
+		endif
+		
+	:fun_letter_eight
+		getColor #tmp_color_1 270 47
+		getColor #tmp_color_2 273 47
+		getColor #tmp_color_3 271 51
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :start
+		endif
+		
+		getColor #tmp_color_1 267 55
+		getColor #tmp_color_2 273 56
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #white_color
 			goto :start
 		endif
 	
