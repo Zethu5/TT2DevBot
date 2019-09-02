@@ -383,21 +383,6 @@ goto :start
 	
 // =======================================================================================================================
 // =======================================================================================================================
-// Close the 'Welcome Back!' screen when re-logging
-// REUTRN VALUE - 2
-:fun_close_welcome_back_screen
-	toast [2] Checking welcome back msg [#loops]
-	getColor #tmp_color_1 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
-	
-	if #tmp_color_1 == #welcome_back_screen_collect_button_color
-		touchDown 0 #welcome_back_screen_collect_button_x #welcome_back_screen_collect_button_y
-		sleep #btn_delay
-		touchUp 0
-	endif
-	
-	goto :start
-// =======================================================================================================================
-// =======================================================================================================================
 // Accept the daily rewards given
 // REUTRN VALUE - 3
 :fun_accept_daily_rewards
@@ -1239,11 +1224,6 @@ goto :start
 		if #result == 0
 			#loops = 1
 			goto :fun_upgrade_tap_and_skills
-		endif
-		
-		#result = #loops % 3000
-		if #result == 0
-			goto :fun_close_welcome_back_screen
 		endif
 
 		#result = #loops % 913
