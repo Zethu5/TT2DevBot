@@ -192,6 +192,14 @@
 #boss_raid_lleg_y = 670
 #boss_raid_rleg_x = 360
 #boss_raid_rleg_y = 670
+#deck_selector_edit_deck_button_x = 170
+#deck_selector_edit_deck_button_y = 620
+#deck_x = 125
+#deck_y = 400
+#clan_raid_icon_x = 120
+#clan_raid_icon_y = 850
+#clan_raid_end_fight_continue_button_x = 150
+#clan_raid_end_fight_continue_button_y = 725
 
 
 // Colors:
@@ -252,7 +260,10 @@
 #boss_raid_icon_color2 = 3948401
 #boss_raid_exclamation_mark_color = 541167
 #boss_raid_fight_button_color = -4018432
+#boss_raid_cannot_fight_button_color = 3355443
 #boss_raid_fight_timer_bg_color = 0
+#deck_selector_edit_deck_button_color = 753915
+#clan_raid_end_fight_continue_button_color = -2446036
 
 
 
@@ -1097,8 +1108,8 @@ goto :start
 
 	:fun_open_clan_chat
 		if #repeat > 5
-			#repeat = 0
-			goto :fun_reset_game
+			#return_value = 0
+			goto :fun_check_everything_ok
 		endif
 		
 		getColor #tmp_color_1 #boss_raid_icon_x1 #boss_raid_icon_y
@@ -1122,11 +1133,11 @@ goto :start
 		
 	:fun_open_clan_raid
 		if #repeat > 5
-			#repeat = 0
-			goto :fun_reset_game
+			#return_value = 0
+			goto :fun_check_everything_ok
 		endif
 		
-		touchPress 0 #boss_raid_exclamation_mark_x #boss_raid_exclamation_mark_y
+		touchPress 0 #clan_raid_icon_x #clan_raid_icon_y
 		sleep 2000
 		
 		getColor #tmp_color_1 #boss_raid_fight_button_x #boss_raid_fight_button_y
@@ -1137,36 +1148,73 @@ goto :start
 		endif
 		
 	#repeat = 0
-	#repeat_2 = 0
 		
 	:fun_boss_raid_start_fight
-		if #repeat > 5 or #repeat_2 > 5
-			#repeat = 0
-			goto :fun_reset_game
+		if #repeat > 5
+			#return_value = 0
+			goto :fun_check_everything_ok
 		endif
 		
 		touchPress 0 #boss_raid_fight_button_x #boss_raid_fight_button_y
 		sleep 2000
 		
-		getColor #tmp_color_1 #boss_raid_fight_confirm_button_x #boss_raid_fight_confirm_button_x
+		getColor #tmp_color_1 #deck_selector_edit_deck_button_x #deck_selector_edit_deck_button_y
 		
-		if #tmp_color_1 != #boss_raid_fight_button_color
+		if #tmp_color_1 != #deck_selector_edit_deck_button_color
 			#repeat = #repeat + 1
 			goto :fun_boss_raid_start_fight
 		endif
 		
+	#repeat = 0
+	#result = #deck_x
+		
+	:fun_deck_selector
+		if #repeat > 5
+			#return_value = 0
+			goto :fun_check_everything_ok
+		endif
+		
+		touchPress 0 #result #deck_y
+		sleep 1500
+		
+		getColor #tmp_color_1 #boss_raid_fight_confirm_button_x #boss_raid_fight_confirm_button_y
+		
+		if #tmp_color_1 != #boss_raid_fight_button_color
+			#result = #result + 55
+			#repeat = #repeat + 1
+			goto :fun_deck_selector
+		else
+			goto :fun_boss_raid_confirm_fight
+		endif
+		
+	#repeat = 0
+		
+	:fun_boss_raid_confirm_fight
+		if #repeat > 5
+			#return_value = 0
+			goto :fun_check_everything_ok
+		endif
+		
 		touchPress 0 #boss_raid_fight_confirm_button_x #boss_raid_fight_confirm_button_y
-		sleep #btn_delay
-		sleep 3000
+		sleep 2000
 		
-		getColor #tmp_color_1 #boss_raid_fight_timer_bg_x #boss_raid_fight_timer_bg_y
+		getColor #tmp_color_1 #boss_raid_fight_confirm_button_x #boss_raid_fight_confirm_button_y
 		
-		if #tmp_color_1 != #boss_raid_fight_timer_bg_color
-			#repeat_2 = #repeat_2 + 1
-			goto :fun_boss_raid_start_fight
+		if #tmp_color_1 == #boss_raid_fight_button_color
+			#repeat = #repeat + 1
+			goto :fun_boss_raid_confirm_fight
+		endif
+		
+	sleep 2000
+	#repeat = 1
+		
+	:fun_boss_raid_fight
+		#result = #repeat % 500
+		
+		if #result == 0
+			goto :fun_boss_fight_check_end
 		endif
 	
-	:fun_boss_raid_fight
 		touchDown 0 #boss_raid_head_x #boss_raid_head_y
 		sleep #hit_delay
 		touchUp 0
@@ -1198,6 +1246,26 @@ goto :start
 		touchDown 0 #boss_raid_rleg_x #boss_raid_rleg_y
 		sleep #hit_delay
 		touchUp 0
+		
+		#repeat = #repeat + 1		
+		goto :fun_boss_raid_fight
+		
+	:fun_boss_fight_check_end
+		getColor #tmp_color_1 #clan_raid_end_fight_continue_button_x #clan_raid_end_fight_continue_button_y
+		
+		if #tmp_color_1 == #clan_raid_end_fight_continue_button_color
+			touchPress 0 #clan_raid_end_fight_continue_button_x #clan_raid_end_fight_continue_button_y
+			sleep 2000
+		else
+			#repeat = 1
+			goto :fun_boss_raid_fight
+		endif
+		
+	
+	#return_value = 0
+	goto :fun_check_everything_ok
+		
+		
 // =======================================================================================================================
 // =======================================================================================================================
 :start
