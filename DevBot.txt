@@ -1057,9 +1057,60 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_check_level
-	toast [10] Checking level 15k+ [#loops]
+	toast [10] Checking level 15.9k+ [#loops]
 	
 	:fun_letter_one
+		getColor #tmp_color_1 248 49
+		getColor #tmp_color_2 250 48
+		getColor #tmp_color_3 250 50
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :fun_letter_one_v2
+		endif
+		
+		getColor #tmp_color_1 250 52
+		getColor #tmp_color_2 249 56
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 or #tmp_color_2 != #white_color
+			goto :fun_letter_one_v2
+		endif
+	
+	:fun_letter_five
+		getColor #tmp_color_1 263 47
+		getColor #tmp_color_2 261 47
+		getColor #tmp_color_3 259 49
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :fun_letter_one_v2
+		endif
+		
+		getColor #tmp_color_1 260 51
+		getColor #tmp_color_2 262 53
+		getColor #tmp_color_3 261 56
+		
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :fun_letter_one_v2
+		endif
+		
+	:fun_letter_nine
+		getColor #tmp_color_1 269 57
+		getColor #tmp_color_2 272 55
+		getColor #tmp_color_3 273 50
+
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :fun_letter_one_v2
+		endif
+
+		getColor #tmp_color_1 271 47
+		getColor #tmp_color_2 268 50
+		getColor #tmp_color_3 270 52
+
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :fun_letter_one_v2
+		endif
+		
+	// for 16k+
+	:fun_letter_one_v2
 		getColor #tmp_color_1 248 49
 		getColor #tmp_color_2 250 48
 		getColor #tmp_color_3 250 50
@@ -1074,27 +1125,21 @@ goto :start
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 or #tmp_color_2 != #white_color
 			goto :start
 		endif
-	
-	:fun_letter_five
-		getColor #tmp_color_1 263 47
-		getColor #tmp_color_2 261 47
-		getColor #tmp_color_3 259 49
 		
-		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
-			goto :start
-		endif
-		
-		getColor #tmp_color_1 260 51
-		getColor #tmp_color_2 262 53
-		getColor #tmp_color_3 261 56
-		
+	:fun_letter_six
+		getColor #tmp_color_1 262 47
+		getColor #tmp_color_2 260 48
+		getColor #tmp_color_3 257 53
+
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 
 		getColor #tmp_color_1 259 57
-		
-		if #tmp_color_1 != #white_color
+		getColor #tmp_color_2 262 54
+		getColor #tmp_color_3 259 52
+
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 	
@@ -1102,7 +1147,6 @@ goto :start
 	
 // =======================================================================================================================
 // =======================================================================================================================
-// ISN'T USED YET, NEED TO HAVE MORE CARDS FOR A 4-TIME ATTACK, WILL BE AUTOMATIC IN THE FUTURE - DO NOT REMOVE YET
 :fun_boss_raid
 	#repeat = 0
 
@@ -1279,9 +1323,14 @@ goto :start
 		sleep #hit_delay
 		touchUp 0
 		
-		#result = #loops % 3300
+		#result = #loops % 3333
 		if #result == 0
 			#loops = 1
+			goto :fun_boss_raid
+		endif
+		
+		#result = #loops % 3300
+		if #result == 0
 			goto :fun_upgrade_tap_and_skills
 		endif
 
