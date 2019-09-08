@@ -1189,7 +1189,7 @@ goto :start
 	#repeat = 1
 		
 	:fun_boss_raid_fight
-		#result = #repeat % 100
+		#result = #repeat % 50
 		
 		if #result == 0
 			goto :fun_boss_fight_check_end
