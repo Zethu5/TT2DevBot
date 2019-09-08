@@ -1,24 +1,10 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-// TODO: Boss Run
-// TODO: Random messeges popping up to take care of if need be (probably will be)
 // TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
-// TODO: Mana bar color check should not be on the blue-ish color but on the white color at the end - will save multiple color variables for the mana bar
 
 // METADATA:
 // 26/8/2019 - 21.2 loops per second
-
-// NOTES:
-// TITANS HIT LOCATIONS:
-// 270 340 - HEAD
-// 270 470 - STOMACH
-// 80  330 - LEFT SHOULDER
-// 460 330 - RIGHT SHOULDER
-// 80  530 - LEFT HAND
-// 460 530 - RIGHT HAND
-// 180 670 - LEFT LEG
-// 360 670 - RIGHT LEG
 
 :fun_after_reset
 // -----------------------------------------------------------------------------------------------------------------------
@@ -1271,6 +1257,10 @@ goto :start
 	:fun_click_screen
 		rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
 		rand #screen_hit_y #screen_hit_min_y #screen_hit_max_y
+		
+		if #screen_hit_x > 330 and #screen_hit_y > 390
+			goto :fun_click_screen
+		endif
 		
 		#loops = #loops + 1
 		
