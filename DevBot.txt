@@ -1278,15 +1278,14 @@ goto :start
 		sleep #hit_delay
 		touchUp 0
 		
-		//#result = #loops % 3333
-		//if #result == 0
-		//	#loops = 1
-		//	goto :fun_boss_raid
-		//endif
+		#result = #loops % 3333
+		if #result == 0
+			#loops = 1
+			goto :fun_boss_raid
+		endif
 		
 		#result = #loops % 3300
 		if #result == 0
-			#loops = 1
 			goto :fun_upgrade_tap_and_skills
 		endif
 
