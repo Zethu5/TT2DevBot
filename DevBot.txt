@@ -1072,7 +1072,7 @@ goto :start
 
 		getColor #tmp_color_1 263 48
 		getColor #tmp_color_2 261 47
-		getColor #tmp_color_3 258 48
+		getColor #tmp_color_3 258 47
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
