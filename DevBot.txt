@@ -270,7 +270,7 @@
 #number_of_times_upgraded_heroes = 0
 #activated_skills = 0 
 #check_if_fairy_commercial = 0
-
+#number_of_times_maxed_out_skills = 0
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -523,6 +523,11 @@ goto :start
 		#repeat = 0
 		#result = #skills_tab_upgrade_button_y + 95
 		
+		if #number_of_times_maxed_out_skills > 1
+			toast [6] Skills already maxed out, going to lvl up heroes
+			goto :fun_upgrade_heroes
+		endif
+		
 		:fun_skills_tab_upgrade_press
 			getColor #tmp_color_1 #skills_tab_upgrade_button_x #result
 			
@@ -545,6 +550,8 @@ goto :start
 			endif
 			
 			#repeat = 0
+			
+		#number_of_times_maxed_out_skills = #number_of_times_maxed_out_skills + 1
 			
 	goto :fun_upgrade_heroes
 // =======================================================================================================================
