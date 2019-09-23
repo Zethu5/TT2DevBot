@@ -123,8 +123,8 @@
 #fairy_mana_bar_check_y = 775
 #fairy_resume_video_x1 = 440
 #fairy_resume_video_y1 = 565
-#fairy_resume_video_x2 = 340
-#fairy_resume_video_y2 = 565
+#fairy_resume_video_x2 = 350
+#fairy_resume_video_y2 = 525
 #fairy_collect_reward_x = 275
 #fairy_collect_reward_y = 685
 #mana_bar_x = 235
@@ -793,11 +793,18 @@ goto :start
 			keyPress K_BACK
 			sleep 2000
 			
-			getColor #tmp_color_1 #fairy_resume_video_x1 #fairy_resume_video_y2
-			getColor #tmp_color_2 #fairy_resume_video_x1 #fairy_resume_video_y2
+			getColor #tmp_color_1 #fairy_resume_video_x1 #fairy_resume_video_y1
 			
-			if #tmp_color_1 == #fairy_resume_video_color and #tmp_color_2 == #fairy_resume_video_color
-				touchPress 0 #fairy_resume_video_x1 #fairy_resume_video_y2
+			if #tmp_color_1 == #fairy_resume_video_color
+				touchPress 0 #fairy_resume_video_x1 #fairy_resume_video_y1
+				sleep #btn_delay
+				sleep 2000
+			endif
+			
+			getColor #tmp_color_1 #fairy_resume_video_x2 #fairy_resume_video_y2
+			
+			if #tmp_color_1 == #fairy_resume_video_color
+				touchPress 0 #fairy_resume_video_x2 #fairy_resume_video_y2
 				sleep #btn_delay
 				sleep 2000
 			endif
