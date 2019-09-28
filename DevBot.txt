@@ -145,7 +145,8 @@
 #prestige_third_layout_y1 = 320
 #prestige_third_layout_x2 = 360
 #prestige_third_layout_y2 = 615
-#commercial_x_button_x = 504
+#commercial_x_button_x1 = 504
+#commercial_x_button_x2 = 35
 #commercial_x_button_y = 36
 #commercial_bg_x = 300
 #commercial_bg_y = 30
@@ -822,11 +823,17 @@ goto :start
 				goto :fairy_collect_reward
 			endif
 			
-			getColor #tmp_color_1 #commercial_x_button_x #commercial_x_button_y
+			getColor #tmp_color_1 #commercial_x_button_x1 #commercial_x_button_y
 			getColor #tmp_color_2 #commercial_bg_x #commercial_bg_y
+			getColor #tmp_color_3 #commercial_x_button_x2 #commercial_x_button_y
 			
 			if #tmp_color_1 != #tmp_color_2 and #retries > 2
-				touchPress 0 #commercial_x_button_x #commercial_x_button_y
+				touchPress 0 #commercial_x_button_x1 #commercial_x_button_y
+				sleep #btn_delay
+				sleep 2000
+				goto :fairy_collect_reward
+			elseif #tmp_color_3 != #tmp_color_2 and #retries > 2
+				touchPress 0 #commercial_x_button_x2 #commercial_x_button_y
 				sleep #btn_delay
 				sleep 2000
 				goto :fairy_collect_reward
