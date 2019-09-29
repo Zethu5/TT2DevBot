@@ -130,7 +130,8 @@
 #mana_bar_x = 235
 #mana_bar_y = 775
 #skills_y = 855
-#skills_x = 45
+#skills_running_y = 827
+#skills_x = 40
 #prestige_x1 = 40
 #prestige_y1 = 870
 #prestige_x2 = 50
@@ -251,7 +252,7 @@
 #boss_raid_fight_timer_bg_color = 0
 #deck_selector_edit_deck_button_color = 753915
 #clan_raid_end_fight_continue_button_color = -2445524
-
+#skills_running_color = -20993
 
 
 // Values:
@@ -272,6 +273,7 @@
 #activated_skills = 0 
 #check_if_fairy_commercial = 0
 #number_of_times_maxed_out_skills = 0
+#number_of_skills = 6
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -886,57 +888,83 @@ goto :start
 		goto :fun_check_everything_ok
 	endif
 	
+	#repeat = 0
+	#result = #skills_x
+	
+	:fun_check_skills_running
+		getColor #tmp_color_1 #result #skills_running_y
+		
+		if #repeat == 0 and #hs_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] HS was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 1 and #ds_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] DS was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 2 and #hm_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] HM was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 3 and #fs_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] FS was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 4 and #wc_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] WC was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 5 and #sc_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] SC was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		endif
+	
+	if #repeat < #number_of_skills
+		#repeat = #repeat + 1
+		#result = #result + 90
+		goto :fun_check_skills_running
+	endif
+	
 	toast [9] Activating skills [#loops]
 	
 	#result = #skills_x
+	#repeat = 0
 	
-	if #hs_skill == 1
-		touchPress 0 #result #skills_y
-		sleep #btn_delay
-	endif
+	:fun_click_skills
+		if #repeat == 0 and #hs_skill == 1
+			touchPress 0 #result #skills_y
+			sleep #btn_delay
+			#activated_skills = 1
+		elseif #repeat == 1 and #ds_skill == 1
+			touchPress 0 #result #skills_y
+			sleep #btn_delay
+			#activated_skills = 1
+		elseif #repeat == 2 and #hm_skill == 1
+			touchPress 0 #result #skills_y
+			sleep #btn_delay
+			#activated_skills = 1
+		elseif #repeat == 3 and #fs_skill == 1
+			touchPress 0 #result #skills_y
+			sleep #btn_delay
+			#activated_skills = 1
+		elseif #repeat == 4 and #wc_skill == 1
+			touchPress 0 #result #skills_y
+			sleep #btn_delay
+			#activated_skills = 1
+		elseif #repeat == 5 and #sc_skill == 1
+			touchPress 0 #result #skills_y
+			sleep #btn_delay
+			#activated_skills = 1
+		endif
 	
-	#result = #result + 90
+		if #repeat < #number_of_skills
+			#repeat = #repeat + 1
+			#result = #result + 90
+			goto :fun_click_skills
+		endif
 	
-	if #ds_skill == 1
-		touchPress 0 #result #skills_y
-		sleep #btn_delay
-	endif
-	
-	#result = #result + 90
-	
-	if #hm_skill == 1
-		touchPress 0 #result #skills_y
-		sleep #btn_delay
-	endif
-	
-	#result = #result + 90
-	
-	if #fs_skill == 1
-		touchPress 0 #result #skills_y
-		sleep #btn_delay
-	endif
-	
-	#result = #result + 90
-	
-	if #wc_skill == 1
-		touchPress 0 #result #skills_y
-		sleep #btn_delay
-	endif
-	
-	#result = #result + 90
-	
-	if #sc_skill == 1
-		touchPress 0 #result #skills_y
-		sleep #btn_delay
-	endif
-	
-	if #activated_skills == 0
-		#activated_skills = 1
-	else
-		#activated_skills = 0
-	endif
-	
-	if #activated_skills == 1 
+	if #activated_skills == 1
 		goto :fun_fight_boss
 	else
 		goto :start
