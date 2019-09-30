@@ -30,8 +30,6 @@
 // -----------------------------------------------------------------------------------------------------------------------
 
 // Positions:
-#welcome_back_screen_collect_button_x = 180
-#welcome_back_screen_collect_button_y = 710
 #screen_hit_min_x = 0
 #screen_hit_min_y = 210
 #screen_hit_max_x = 540
@@ -55,11 +53,9 @@
 #skills_tab_bg_x = 20
 #skills_tab_bg_y = 940
 #skill_tree_icon_x = 140
-#skill_tree_icon_y_minimized = 590
 #skill_tree_icon_y_maximized = 75
 #scroll_up_x = 250
 #scroll_up_y = 75
-#scroll_down_x = 250
 #scroll_down_y = 900
 #maximize_tab_button_x = 430
 #maximize_tab_button_y = 530
@@ -162,8 +158,6 @@
 #boss_raid_fight_button_y = 830
 #boss_raid_fight_confirm_button_x = 350
 #boss_raid_fight_confirm_button_y = 620
-#boss_raid_fight_timer_bg_x = 111
-#boss_raid_fight_timer_bg_y = 121
 #boss_raid_head_x = 270
 #boss_raid_head_y = 340
 #boss_raid_stomach_x = 270
@@ -194,8 +188,6 @@
 #tmp_color_1 = 0
 #tmp_color_2 = 0
 #tmp_color_3 = 0
-#welcome_back_screen_bg_color = 1835008
-#welcome_back_screen_collect_button_color = 753915
 #daily_rewards_icon_right_ribbon_color = 2631135
 #daily_rewards_icon_left_ribbon_color = 3158011
 #daily_rewards_top_bar_color = 3311064
@@ -248,8 +240,6 @@
 #boss_raid_icon_color2 = 3948401
 #boss_raid_exclamation_mark_color = 541167
 #boss_raid_fight_button_color = -4018432
-#boss_raid_cannot_fight_button_color = 3355443
-#boss_raid_fight_timer_bg_color = 0
 #deck_selector_edit_deck_button_color = 753915
 #clan_raid_end_fight_continue_button_color = -2445524
 #skills_running_color = -20993
@@ -260,8 +250,6 @@
 #btn_delay = 150
 #hit_delay = 40
 #result = 0
-#result_2 = 0
-#result_3 = 0
 #repeat = 0
 #repeat_2 = 0
 #repeat_3 = 0
@@ -664,8 +652,8 @@ goto :start
 	#fairy_option = 0
 	:fairy_gold_commercial
 		getColor #tmp_color_1 #fairy_gold_x1 #fairy_gold_y1
-		getColor #tmp_color_2 #fairy_gold_x2 #fairy_gold_y1
-		getColor #tmp_color_3 #fairy_gold_x3 #fairy_gold_y1
+		getColor #tmp_color_2 #fairy_gold_x2 #fairy_gold_y2
+		getColor #tmp_color_3 #fairy_gold_x3 #fairy_gold_y3
 		
 		if #tmp_color_1 == #fairy_gold_color1 and #tmp_color_2 == #fairy_gold_color2 and #tmp_color_3 == #fairy_gold_color3
 			#fairy_option = 1
