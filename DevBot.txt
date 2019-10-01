@@ -230,10 +230,10 @@
 #skill_cancel_color = -7970304
 #prestige_color1 = 4793864
 #prestige_color2 = -593169
-#prestige_second_layout_color1 = 7173508
+#prestige_second_layout_color1 = 7961474
 #prestige_second_layout_color2 = -2446036
-#prestige_third_layout_color1 = 7173250
-#prestige_third_layout_color2 = -2445524
+#prestige_third_layout_color1 = 7961474
+#prestige_third_layout_color2 = -2445780
 #white_color = -65793
 #tab_top_bar_color = 5329493
 #boss_raid_icon_color1 = 4541565
