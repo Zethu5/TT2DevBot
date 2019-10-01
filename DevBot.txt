@@ -198,13 +198,13 @@
 #skills_tab_bg_passive_color = 3958771
 #skills_tab_active_color = -5464966
 #skill_tree_icon_color = 3531516
-#maximize_tab_button_color = 3160133
+#maximize_tab_button_color = 2894637
 #max_upgrade_skill_button_color = 2236808
 #heroes_tab_button_inactive_color = 6379040
 #heroes_tab_button_active_color = 2563862
 #pet_eggs_icon_color = -65793
 #masteries_inner_circle_color = 3005183
-#close_tab_button_color = 3160133
+#close_tab_button_color = 2894895
 #fairy_discount_color1 = -65832
 #fairy_discount_color2 = 1826555
 #fairy_discount_color3 = 7416279
@@ -621,6 +621,8 @@ goto :start
 	
 	#repeat = 0
 	#result = #upgrade_heroes_y
+	
+	sleep 1000
 		
 	:func_close_heroes_tab
 		getColor #tmp_color_1 #close_tab_button_x #close_tab_button_y
