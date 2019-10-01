@@ -201,7 +201,7 @@
 #maximize_tab_button_color = 3160133
 #max_upgrade_skill_button_color = 2236808
 #heroes_tab_button_inactive_color = 6379040
-#heroes_tab_button_active_color = 2958364
+#heroes_tab_button_active_color = 2563862
 #pet_eggs_icon_color = -65793
 #masteries_inner_circle_color = 3005183
 #close_tab_button_color = 3160133
@@ -554,7 +554,7 @@ goto :start
 	:return_value_7
 	
 	touchPress 0 #heroes_tab_button_x #heroes_tab_button_y
-	sleep #btn_delay
+	sleep 1000
 	
 	getColor #tmp_color_1 #heroes_tab_button_x #heroes_tab_button_y
 	
