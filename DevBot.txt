@@ -411,6 +411,13 @@ goto :start
 	
 	getColor #tmp_color_1 #mana_bar_x #mana_bar_y
 	
+	// It's to avoid a looping happening when skills somehow dont get upgraded + skills are getting activated right after
+	// the mana stays the same - thus creating the endless loop until hiro memory buffers overload and reset
+	if #activated_skills != 0
+		#activated_skills = 0
+		goto :start
+	endif
+	
 	if #tmp_color_1 == #mana_bar_color1 or #tmp_color_1 == mana_bar_color2
 		goto :fun_activate_skills
 	endif
@@ -920,6 +927,7 @@ goto :start
 	
 	#result = #skills_x
 	#repeat = 0
+	#activated_skills = 0
 	
 	:fun_click_skills
 		if #repeat == 0 and #hs_skill == 1
