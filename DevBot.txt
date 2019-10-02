@@ -1090,45 +1090,39 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_check_level
-	toast [10] Checking level 19k+ [#loops]
+	toast [10] Checking level 20k+ [#loops]
 	
-	:fun_letter_one
-		getColor #tmp_color_1 248 49
-		getColor #tmp_color_2 250 48
-		getColor #tmp_color_3 250 50
+	:fun_letter_two
+		getColor #tmp_color_1 247 47
+		getColor #tmp_color_2 251 47
+		getColor #tmp_color_3 252 50
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 		
-		getColor #tmp_color_1 250 52
-		getColor #tmp_color_2 249 56
+		getColor #tmp_color_1 249 53
+		getColor #tmp_color_2 246 57
+		getColor #tmp_color_3 250 57
 		
-		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 or #tmp_color_2 != #white_color
-			goto :start
-		endif
-		
-	:fun_letter_nine
-		getColor #tmp_color_1 257 57
-		getColor #tmp_color_2 261 56
-		getColor #tmp_color_3 262 49
-
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
-
+		
+	:fun_letter_zero
 		getColor #tmp_color_1 260 47
-		getColor #tmp_color_2 257 50
-		getColor #tmp_color_3 258 51
+		getColor #tmp_color_2 258 52
+		getColor #tmp_color_3 257 56
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
-		
-		// 18 and 19 are quite similar, adding this to distinguish between them
-		getColor #tmp_color_1 257 54
-		
-		if #tmp_color_1 == #white_color
+
+		getColor #tmp_color_1 262 49
+		getColor #tmp_color_2 262 52
+		getColor #tmp_color_3 261 56
+
+		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 
