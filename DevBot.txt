@@ -152,8 +152,8 @@
 #boss_raid_icon_y = 25
 #boss_raid_icon_x1 = 90
 #boss_raid_icon_x2 = 95
-#boss_raid_exclamation_mark_x = 78
-#boss_raid_exclamation_mark_y = 870
+#boss_raid_exclamation_mark_x = 50
+#boss_raid_exclamation_mark_y = 840
 #boss_raid_fight_button_x = 390
 #boss_raid_fight_button_y = 830
 #boss_raid_fight_confirm_button_x = 350
@@ -237,11 +237,11 @@
 #white_color = -65793
 #tab_top_bar_color = 5329493
 #boss_raid_icon_color1 = 4541565
-#boss_raid_icon_color2 = 3948401
-#boss_raid_exclamation_mark_color = 541167
+#boss_raid_icon_color2 = 3948657
+#boss_raid_exclamation_mark_color = 2632135
 #boss_raid_fight_button_color = -4018432
 #deck_selector_edit_deck_button_color = 753915
-#clan_raid_end_fight_continue_button_color = -2445524
+#clan_raid_end_fight_continue_button_color = -2445780
 #skills_running_color = -20993
 
 
