@@ -346,7 +346,7 @@ goto :start
 	sleep 2000
 	
 	touchPress 0 #android_settings_x #android_settings_y
-	sleep 2000
+	sleep 4000
 	
 	touchPress 0 #android_apps_x #android_apps_y
 	sleep 2000
