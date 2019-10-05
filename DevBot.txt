@@ -1118,7 +1118,7 @@ goto :start
 			goto :start
 		endif
 
-		getColor #tmp_color_1 262 46
+		getColor #tmp_color_1 262 47
 		getColor #tmp_color_2 260 48
 		getColor #tmp_color_3 258 49
 
