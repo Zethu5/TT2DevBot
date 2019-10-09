@@ -804,7 +804,7 @@ goto :start
 			getColor #tmp_color_1 #shitty_commercials_x_button_x #shitty_commercials_x_button_y
 			
 			if #tmp_color_1 == #shitty_commercials_x_button_color
-				sleep 20000
+				sleep 30000
 			endif
 			
 			keyPress K_BACK
