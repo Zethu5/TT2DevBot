@@ -182,6 +182,8 @@
 #clan_raid_icon_y = 850
 #clan_raid_end_fight_continue_button_x = 150
 #clan_raid_end_fight_continue_button_y = 725
+#shitty_commercials_x_button_x = 27
+#shitty_commercials_x_button_y = 27
 
 
 // Colors:
@@ -243,6 +245,7 @@
 #deck_selector_edit_deck_button_color = 753915
 #clan_raid_end_fight_continue_button_color = -2445780
 #skills_running_color = -20993
+shitty_commercials_x_button_color = 0
 
 
 // Values:
@@ -797,6 +800,13 @@ goto :start
 			endif
 		
 			sleep 10000
+			
+			getColor #tmp_color_1 #shitty_commercials_x_button_x #shitty_commercials_x_button_y
+			
+			if #tmp_color_1 == #shitty_commercials_x_button_color
+				sleep 20000
+			endif
+			
 			keyPress K_BACK
 			sleep 2000
 			
