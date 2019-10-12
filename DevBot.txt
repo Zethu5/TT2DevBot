@@ -876,7 +876,7 @@ goto :start
 				goto :fairy_collect_reward
 			endif
 			
-			sleep 5000
+			sleep 2000
 			
 			if #fairy_option == 3 or #fairy_option == 4
 				goto :fun_fight_boss
