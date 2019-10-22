@@ -204,7 +204,7 @@
 #maximize_tab_button_color = 2894637
 #max_upgrade_skill_button_color = 2236808
 #heroes_tab_button_inactive_color = 6379040
-#heroes_tab_button_active_color = 2563862
+#heroes_tab_button_active_color = 2958364
 #pet_eggs_icon_color = -65793
 #masteries_inner_circle_color = 3005183
 #close_tab_button_color = 2894895
@@ -232,7 +232,7 @@
 #mana_bar_color2 = -69345
 #skill_cancel_color = -7970304
 #prestige_color1 = 4793864
-#prestige_color2 = -593169
+#prestige_color2 = -593425
 #prestige_second_layout_color1 = 7961474
 #prestige_second_layout_color2 = -2446036
 #prestige_third_layout_color1 = 7961474
@@ -573,13 +573,13 @@ goto :start
 		#return_value = 7
 		goto :fun_check_everything_ok
 	endif
-	
+
 	getColor #tmp_color_1 #masteries_inner_circle_x #masteries_inner_circle_y
 	
 	if #tmp_color_1 == #masteries_inner_circle_color
 		goto :fun_heroes_after_scroll_up
 	endif
-	
+
 	#repeat_3 = 0
 
 	:fun_heroes_tab_scroll_up
@@ -617,7 +617,7 @@ goto :start
 		endif
 		
 	:fun_heroes_after_scroll_up
-		
+
 	#repeat = 0
 	#result = #upgrade_heroes_y
 	
@@ -634,7 +634,7 @@ goto :start
 	#result = #upgrade_heroes_y
 	
 	sleep 1000
-		
+
 	:func_close_heroes_tab
 		getColor #tmp_color_1 #close_tab_button_x #close_tab_button_y
 
