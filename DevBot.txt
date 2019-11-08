@@ -962,6 +962,7 @@ goto :start
 			sleep #btn_delay
 			#activated_skills = 1
 		elseif #repeat == 5 and #sc_skill == 1
+			sleep 2000
 			touchPress 0 #result #skills_y
 			sleep #btn_delay
 			#activated_skills = 1
