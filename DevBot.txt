@@ -85,7 +85,7 @@
 #pet_eggs_icon_x = 33
 #pet_eggs_icon_y = 333
 #upgrade_heroes_x = 460
-#upgrade_heroes_y = 130
+#upgrade_heroes_y = 980
 #masteries_inner_circle_x = 60
 #masteries_inner_circle_y = 67
 #close_tab_button_x = 505
@@ -632,7 +632,7 @@ goto :start
 		if #repeat < 10
 			touchPress 0 #upgrade_heroes_x #result
 			sleep #btn_delay
-			#result = #result + 85
+			#result = #result - 85
 			#repeat = #repeat + 1
 			goto :fun_heroes_tab_click_upgrade
 		endif
