@@ -4,15 +4,6 @@
 // TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
 
 // METADATA:
-//		0:
-//      -----------------------------
-//		getColor #tmp_color_1 261 48
-//		getColor #tmp_color_2 258 50
-//		getColor #tmp_color_3 257 55
-
-//		getColor #tmp_color_1 263 48
-//		getColor #tmp_color_2 263 50
-//		getColor #tmp_color_3 262 55
 
 :fun_after_reset
 // -----------------------------------------------------------------------------------------------------------------------
@@ -1109,7 +1100,7 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_check_level
-	toast [10] Checking level 37k+ [#loops]
+	toast [10] Checking level 39k+ [#loops]
 	
 	:fun_letter_three
 		getColor #tmp_color_1 247 47
@@ -1128,20 +1119,26 @@ goto :start
 			goto :start
 		endif
 		
-	:fun_letter_seven
-		getColor #tmp_color_1 259 47
-		getColor #tmp_color_2 261 47
-		getColor #tmp_color_3 262 47
+	:fun_letter_nine
+		getColor #tmp_color_1 257 57
+		getColor #tmp_color_2 260 56
+		getColor #tmp_color_3 261 52
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 
-		getColor #tmp_color_1 261 51
-		getColor #tmp_color_2 260 54
-		getColor #tmp_color_3 258 56
+		getColor #tmp_color_1 261 47
+		getColor #tmp_color_2 258 51
+		getColor #tmp_color_3 259 53
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
+			goto :start
+		endif
+		
+		getColor #tmp_color_1 260 50
+		
+		if #tmp_color_1 == #white_color
 			goto :start
 		endif
 		
