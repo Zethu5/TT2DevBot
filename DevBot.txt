@@ -1100,7 +1100,7 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_check_level
-	toast [10] Checking level 41k+ [#loops]
+	toast [10] Checking level 43k+ [#loops]
 	
 	:fun_letter_four
 		getColor #tmp_color_1 250 56
@@ -1119,18 +1119,18 @@ goto :start
 			goto :start
 		endif
 		
-	:fun_letter_one
-		getColor #tmp_color_1 260 56
-		getColor #tmp_color_2 260 54
-		getColor #tmp_color_3 261 51
+	:fun_letter_three
+		getColor #tmp_color_1 257 47
+		getColor #tmp_color_2 261 47
+		getColor #tmp_color_3 260 52
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 
-		getColor #tmp_color_1 262 47
-		getColor #tmp_color_2 260 48
-		getColor #tmp_color_3 258 49
+		getColor #tmp_color_1 261 53
+		getColor #tmp_color_2 260 56
+		getColor #tmp_color_3 257 57
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
