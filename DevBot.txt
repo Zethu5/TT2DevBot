@@ -136,7 +136,7 @@
 #prestige_second_layout_x1 = 150
 #prestige_second_layout_y1 = 150
 #prestige_second_layout_x2 = 280
-#prestige_second_layout_y2 = 770
+#prestige_second_layout_y2 = 780
 #prestige_third_layout_x1 = 160
 #prestige_third_layout_y1 = 320
 #prestige_third_layout_x2 = 320
@@ -1122,7 +1122,7 @@ goto :start
 	:fun_letter_seven
 		getColor #tmp_color_1 258 56
 		getColor #tmp_color_2 260 54
-		getColor #tmp_color_3 261 52
+		getColor #tmp_color_3 260 52
 
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
