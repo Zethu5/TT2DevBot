@@ -68,7 +68,7 @@
 #android_apps_x = 270
 #android_apps_y = 725
 #android_tt2_app_x = 280
-#android_tt2_app_y = 530
+#android_tt2_app_y = 400
 #android_tt2_force_stop_x = 130
 #android_tt2_force_stop_y = 170
 #android_tt2_approve_stop_x = 430
