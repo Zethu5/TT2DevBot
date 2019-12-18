@@ -1,8 +1,6 @@
 // Made by Zethus
 // Nox - Mobile Phone - 540x960
 
-// TODO: Revamp the return_value method, mb shorten it up a little... need to check after every basic game function has been implemented
-
 // METADATA:
 
 :fun_after_reset
@@ -133,14 +131,14 @@
 #prestige_y2 = 895
 #prestige_menu_button_x = 450
 #prestige_menu_button_y = 880
-#prestige_second_layout_x1 = 150
-#prestige_second_layout_y1 = 150
+#prestige_second_layout_x1 = 130
+#prestige_second_layout_y1 = 120
 #prestige_second_layout_x2 = 280
-#prestige_second_layout_y2 = 780
+#prestige_second_layout_y2 = 820
 #prestige_third_layout_x1 = 160
-#prestige_third_layout_y1 = 320
+#prestige_third_layout_y1 = 270
 #prestige_third_layout_x2 = 320
-#prestige_third_layout_y2 = 630
+#prestige_third_layout_y2 = 670
 #commercial_x_button_x1 = 504
 #commercial_x_button_x2 = 35
 #commercial_x_button_y = 36
@@ -230,11 +228,11 @@
 #mana_bar_color2 = -69345
 #skill_cancel_color = -7970304
 #prestige_color1 = 4793864
-#prestige_color2 = -593425
+#prestige_color2 = -593169
 #prestige_second_layout_color1 = 7961474
 #prestige_second_layout_color2 = -3234500
-#prestige_third_layout_color1 = 7960962
-#prestige_third_layout_color2 = -2446036
+#prestige_third_layout_color1 = 7961474
+#prestige_third_layout_color2 = -3234500
 #white_color = -65793
 #tab_top_bar_color = 5329493
 #boss_raid_icon_color1 = 4541313
