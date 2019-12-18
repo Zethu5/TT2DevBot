@@ -205,7 +205,7 @@
 #heroes_tab_button_active_color = 2368548
 #pet_eggs_icon_color = -65793
 #masteries_inner_circle_color = 3005183
-#close_tab_button_color = 2829359
+#close_tab_button_color = 2960430
 #fairy_discount_color1 = -65832
 #fairy_discount_color2 = 1826555
 #fairy_discount_color3 = 7416279
