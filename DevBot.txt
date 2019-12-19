@@ -234,7 +234,7 @@
 #prestige_third_layout_color1 = 7961474
 #prestige_third_layout_color2 = -3234500
 #white_color = -65793
-#tab_top_bar_color = 5329493
+#tab_top_bar_color = 5329237
 #boss_raid_icon_color1 = 4541313
 #boss_raid_icon_color2 = 4013937
 #boss_raid_exclamation_mark_color = 2632135
