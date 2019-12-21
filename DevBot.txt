@@ -484,7 +484,7 @@ goto :start
 			#repeat_3 = 0
 			log skills scroll up not ok
 			toast skills scroll up not ok
-			goto :fun_reset_game
+			goto :fun_check_everything_ok
 		endif
 		
 		touchDown 0 #scroll_up_x #scroll_up_y
@@ -583,7 +583,7 @@ goto :start
 			#repeat_3 = 0
 			log heroes scroll up not ok
 			toast heroes scroll up not ok
-			goto :fun_reset_game
+			goto :fun_check_everything_ok
 		endif
 		
 		touchDown 0 #scroll_up_x #scroll_up_y
