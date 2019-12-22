@@ -243,6 +243,8 @@
 #clan_raid_end_fight_continue_button_color = -2445780
 #skills_running_color = -20993
 #shitty_commercials_x_button_color = 0
+#skills_tab_color_passive_covered_color = 396318
+skills_tab_color_bg_covered_color = 791857
 
 
 // Values:
@@ -304,6 +306,15 @@ goto :start
 		if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #skills_tab_bg_passive_color or #tmp_color_3 == #tab_top_bar_color
 			sleep 3000
 		endif
+		
+		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+		getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
+		
+		if #tmp_color_1 == #skills_tab_color_passive_covered_color or #tmp_color_2 == skills_tab_color_bg_covered_color
+			touchPress 0 #skills_tab_x #skills_tab_y
+			sleep 1000
+		endif
+		
 		
 		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 		getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
