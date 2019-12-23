@@ -1129,17 +1129,17 @@ goto :start
 		
 	:fun_letter_four
 		getColor #tmp_color_1 261 56
-		getColor #tmp_color_2 262 53
+		getColor #tmp_color_2 261 52
 		getColor #tmp_color_3 263 48
-		
+
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
 
-		getColor #tmp_color_1 257 53
-		getColor #tmp_color_2 258 55
-		getColor #tmp_color_3 262 53
-		
+		getColor #tmp_color_1 258 51
+		getColor #tmp_color_2 257 55
+		getColor #tmp_color_3 262 55
+
 		if #tmp_color_1 != #tmp_color_2 or #tmp_color_2 != #tmp_color_3 or #tmp_color_3 != #white_color
 			goto :start
 		endif
