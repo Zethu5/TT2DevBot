@@ -285,6 +285,7 @@ goto :start
 	
 	:fun_recheck_state
 		toast [0] Checking game state [#loops]
+		
 		if #check_if_fairy_commercial == 0
 			#check_if_fairy_commercial = 1
 			goto :fun_fairy_commercials
@@ -315,6 +316,12 @@ goto :start
 			sleep 1000
 		endif
 		
+		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
+		getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
+		
+		if #tmp_color_1 != #skills_tab_passive_color or #tmp_color_2 != #skills_tab_bg_passive_color or #tmp_color_3 == #tab_top_bar_color
+			sleep 3000
+		endif
 		
 		getColor #tmp_color_1 #skills_tab_x #skills_tab_y
 		getColor #tmp_color_2 #skills_tab_bg_x #skills_tab_bg_y
