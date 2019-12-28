@@ -181,6 +181,8 @@
 #clan_raid_end_fight_continue_button_y = 725
 #shitty_commercials_x_button_x = 27
 #shitty_commercials_x_button_y = 27
+#wc_skill_check_at_half_x = 405
+#wc_skill_check_at_half_y = 890
 
 
 // Colors:
@@ -916,6 +918,10 @@ goto :start
 	:fun_check_skills_running
 		getColor #tmp_color_1 #result #skills_running_y
 		
+		if #repeat == 4
+			getColor #tmp_color_2 #wc_skill_check_at_half_x #wc_skill_check_at_half_y
+		endif
+		
 		if #repeat == 0 and #hs_skill == 1 and #tmp_color_1 == #skills_running_color
 			toast [9] HS was running [#loops]
 			#return_value = 0
@@ -932,7 +938,7 @@ goto :start
 			toast [9] FS was running [#loops]
 			#return_value = 0
 			goto :fun_check_everything_ok
-		elseif #repeat == 4 and #wc_skill == 1 and #tmp_color_1 == #skills_running_color
+		elseif #repeat == 4 and #wc_skill == 1 and #tmp_color_1 == #skills_running_color and #tmp_color_2 != #skills_running_color
 			toast [9] WC was running [#loops]
 			#return_value = 0
 			goto :fun_check_everything_ok
