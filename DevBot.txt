@@ -182,7 +182,7 @@
 #clan_raid_end_fight_continue_button_y = 725
 #shitty_commercials_x_button_x = 27
 #shitty_commercials_x_button_y = 27
-#wc_skill_check_at_half_x = 405
+#wc_skill_check_at_half_x = 395
 #wc_skill_check_at_half_y = 890
 
 
