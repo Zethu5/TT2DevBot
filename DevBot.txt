@@ -916,7 +916,11 @@ goto :start
 	
 	#activate_skills = 1
 	#return_value = 12
+	#repeat = 0
+	#result = #skills_x
+	toast [12] Checking if skills running [#loops]
 	goto :fun_check_skills_running
+	
 	:fun_after_check_skills_running
 	
 	if #activate_skills == 0
@@ -972,11 +976,6 @@ goto :start
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_check_skills_running
-	toast [13] Checking if skills running [#loops]
-	
-	#repeat = 0
-	#result = #skills_x
-	
 	getColor #tmp_color_1 #result #skills_running_y
 	
 	if #repeat == 4
@@ -1413,7 +1412,11 @@ goto :start
 		
 		#result = #loops % 277
 		if #result == 0
+			#activate_skills = 1
 			#return_value = 13
+			#repeat = 0
+			#result = #skills_x
+			toast [13] Checking if skills running [#loops]
 			goto :fun_check_skills_running
 		endif
 		
