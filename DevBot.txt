@@ -986,27 +986,35 @@ goto :start
 		toast [9] HS was running [#loops]
 		#screen_hit_min_y_tmp = 325
 		#activate_skills = 0
+		goto :fun_after_check_skills_running_internal
 	elseif #repeat == 1 and #ds_skill == 1 and #tmp_color_1 == #skills_running_color
 		toast [9] DS was running [#loops]
 		#screen_hit_min_y_tmp = 325
 		#activate_skills = 0
+		goto :fun_after_check_skills_running_internal
 	elseif #repeat == 2 and #hm_skill == 1 and #tmp_color_1 == #skills_running_color
 		toast [9] HM was running [#loops]
 		#screen_hit_min_y_tmp = 325
 		#activate_skills = 0
+		goto :fun_after_check_skills_running_internal
 	elseif #repeat == 3 and #fs_skill == 1 and #tmp_color_1 == #skills_running_color
 		toast [9] FS was running [#loops]
 		#screen_hit_min_y_tmp = 325
 		#activate_skills = 0
+		goto :fun_after_check_skills_running_internal
 	elseif #repeat == 4 and #wc_skill == 1 and #tmp_color_1 == #skills_running_color and #tmp_color_2 != #skills_running_color
 		toast [9] WC was running [#loops]
 		#screen_hit_min_y_tmp = 325
 		#activate_skills = 0
+		goto :fun_after_check_skills_running_internal
 	elseif #repeat == 5 and #sc_skill == 1 and #tmp_color_1 == #skills_running_color
 		toast [9] SC was running [#loops]
 		#screen_hit_min_y_tmp = 325
 		#activate_skills = 0
+		goto :fun_after_check_skills_running_internal
 	endif
+	
+	:fun_after_check_skills_running_internal
 
 	if #repeat < #number_of_skills
 		#repeat = #repeat + 1
