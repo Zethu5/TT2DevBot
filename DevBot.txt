@@ -29,7 +29,6 @@
 // Positions:
 #screen_hit_min_x = 0
 #screen_hit_min_y = 210
-#screen_hit_min_y_tmp = #screen_hit_min_y
 #screen_hit_max_x = 540
 #screen_hit_max_y = 500
 #screen_hit_x = 0
@@ -182,7 +181,7 @@
 #clan_raid_end_fight_continue_button_y = 725
 #shitty_commercials_x_button_x = 27
 #shitty_commercials_x_button_y = 27
-#wc_skill_check_at_half_x = 395
+#wc_skill_check_at_half_x = 405
 #wc_skill_check_at_half_y = 890
 
 
@@ -191,7 +190,7 @@
 #tmp_color_2 = 0
 #tmp_color_3 = 0
 #daily_rewards_icon_right_ribbon_color = 2631135
-#daily_rewards_icon_left_ribbon_color = 3158011
+#daily_rewards_icon_left_ribbon_color = 3158012
 #daily_rewards_top_bar_color = 3311064
 #daily_rewards_collect_button_color = -4089562
 #fight_boss_button_icon_color = 266788
@@ -267,7 +266,6 @@
 #check_if_fairy_commercial = 0
 #number_of_times_maxed_out_skills = 0
 #number_of_skills = 6
-#activate_skills = 1
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -402,10 +400,10 @@ goto :start
 	
 	if #tmp_color_1 == #daily_rewards_icon_right_ribbon_color and #tmp_color_2 == #daily_rewards_icon_left_ribbon_color
 		touchPress 0 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
-		sleep #btn_delay
+		sleep 2000
+	else
+		goto :start
 	endif
-	
-	sleep 2000
 	
 	getColor #tmp_color_1 #daily_rewards_top_bar_x #daily_rewards_top_bar_y
 	getColor #tmp_color_2 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
@@ -914,19 +912,46 @@ goto :start
 		goto :fun_check_everything_ok
 	endif
 	
-	#activate_skills = 1
-	#return_value = 12
 	#repeat = 0
 	#result = #skills_x
-	toast [12] Checking if skills running [#loops]
-	goto :fun_check_skills_running
 	
-	:fun_after_check_skills_running
+	:fun_check_skills_running
+		getColor #tmp_color_1 #result #skills_running_y
+		
+		if #repeat == 4
+			getColor #tmp_color_2 #wc_skill_check_at_half_x #wc_skill_check_at_half_y
+		endif
+		
+		if #repeat == 0 and #hs_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] HS was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 1 and #ds_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] DS was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 2 and #hm_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] HM was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 3 and #fs_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] FS was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 4 and #wc_skill == 1 and #tmp_color_1 == #skills_running_color and #tmp_color_2 != #skills_running_color
+			toast [9] WC was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		elseif #repeat == 5 and #sc_skill == 1 and #tmp_color_1 == #skills_running_color
+			toast [9] SC was running [#loops]
+			#return_value = 0
+			goto :fun_check_everything_ok
+		endif
 	
-	if #activate_skills == 0
-		#activate_skills = 1
-		#return_value = 0
-		goto :fun_check_everything_ok
+	if #repeat < #number_of_skills
+		#repeat = #repeat + 1
+		#result = #result + 90
+		goto :fun_check_skills_running
 	endif
 	
 	toast [9] Activating skills [#loops]
@@ -973,65 +998,6 @@ goto :start
 	else
 		goto :start
 	endif
-// =======================================================================================================================
-// =======================================================================================================================
-:fun_check_skills_running
-	getColor #tmp_color_1 #result #skills_running_y
-	
-	if #repeat == 4
-		getColor #tmp_color_2 #wc_skill_check_at_half_x #wc_skill_check_at_half_y
-	endif
-	
-	if #repeat == 0 and #hs_skill == 1 and #tmp_color_1 == #skills_running_color
-		toast [9] HS was running [#loops]
-		#screen_hit_min_y_tmp = 325
-		#activate_skills = 0
-		goto :fun_after_check_skills_running_internal
-	elseif #repeat == 1 and #ds_skill == 1 and #tmp_color_1 == #skills_running_color
-		toast [9] DS was running [#loops]
-		#screen_hit_min_y_tmp = 325
-		#activate_skills = 0
-		goto :fun_after_check_skills_running_internal
-	elseif #repeat == 2 and #hm_skill == 1 and #tmp_color_1 == #skills_running_color
-		toast [9] HM was running [#loops]
-		#screen_hit_min_y_tmp = 325
-		#activate_skills = 0
-		goto :fun_after_check_skills_running_internal
-	elseif #repeat == 3 and #fs_skill == 1 and #tmp_color_1 == #skills_running_color
-		toast [9] FS was running [#loops]
-		#screen_hit_min_y_tmp = 325
-		#activate_skills = 0
-		goto :fun_after_check_skills_running_internal
-	elseif #repeat == 4 and #wc_skill == 1 and #tmp_color_1 == #skills_running_color and #tmp_color_2 != #skills_running_color
-		toast [9] WC was running [#loops]
-		#screen_hit_min_y_tmp = 325
-		#activate_skills = 0
-		goto :fun_after_check_skills_running_internal
-	elseif #repeat == 5 and #sc_skill == 1 and #tmp_color_1 == #skills_running_color
-		toast [9] SC was running [#loops]
-		#screen_hit_min_y_tmp = 325
-		#activate_skills = 0
-		goto :fun_after_check_skills_running_internal
-	endif
-
-	if #repeat < #number_of_skills
-		#repeat = #repeat + 1
-		#result = #result + 90
-		goto :fun_check_skills_running
-	endif
-	
-	:fun_after_check_skills_running_internal
-	
-	if #activate_skills == 1
-		#screen_hit_min_y_tmp = #screen_hit_min_y
-	endif
-	
-	if #return_value == 12
-		goto :fun_after_check_skills_running
-	elseif #return_value == 13
-		goto :start
-	endif
-	
 // =======================================================================================================================
 // =======================================================================================================================
 :fun_prestige
@@ -1364,7 +1330,7 @@ goto :start
 :start
 	:fun_click_screen
 		rand #screen_hit_x #screen_hit_min_x #screen_hit_max_x
-		rand #screen_hit_y #screen_hit_min_y_tmp #screen_hit_max_y
+		rand #screen_hit_y #screen_hit_min_y #screen_hit_max_y
 		
 		if #screen_hit_x > 330 and #screen_hit_y > 390
 			goto :fun_click_screen
@@ -1413,24 +1379,14 @@ goto :start
 			goto :fun_check_everything_ok
 		endif
 		
-		#result = #loops % 433
-		if #result == 0
-			goto :fun_activate_skills
-		endif
-		
 		#result = #loops % 313
 		if #result == 0
 			goto :fun_fairy_commercials
 		endif
 		
-		#result = #loops % 277
+		#result = #loops % 169
 		if #result == 0
-			#activate_skills = 1
-			#return_value = 13
-			#repeat = 0
-			#result = #skills_x
-			toast [13] Checking if skills running [#loops]
-			goto :fun_check_skills_running
+			goto :fun_activate_skills
 		endif
 		
 	goto :start
