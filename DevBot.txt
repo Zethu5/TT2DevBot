@@ -1405,6 +1405,11 @@ goto :start
 			goto :fun_check_everything_ok
 		endif
 		
+		#result = #loops % 433
+		if #result == 0
+			goto :fun_activate_skills
+		endif
+		
 		#result = #loops % 313
 		if #result == 0
 			goto :fun_fairy_commercials
@@ -1418,11 +1423,6 @@ goto :start
 			#result = #skills_x
 			toast [13] Checking if skills running [#loops]
 			goto :fun_check_skills_running
-		endif
-		
-		#result = #loops % 169
-		if #result == 0
-			goto :fun_activate_skills
 		endif
 		
 	goto :start
