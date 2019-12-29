@@ -1013,14 +1013,14 @@ goto :start
 		#activate_skills = 0
 		goto :fun_after_check_skills_running_internal
 	endif
-	
-	:fun_after_check_skills_running_internal
 
 	if #repeat < #number_of_skills
 		#repeat = #repeat + 1
 		#result = #result + 90
 		goto :fun_check_skills_running
 	endif
+	
+	:fun_after_check_skills_running_internal
 	
 	if #activate_skills == 1
 		#screen_hit_min_y_tmp = #screen_hit_min_y
