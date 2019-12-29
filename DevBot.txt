@@ -190,7 +190,7 @@
 #tmp_color_2 = 0
 #tmp_color_3 = 0
 #daily_rewards_icon_right_ribbon_color = 2631135
-#daily_rewards_icon_left_ribbon_color = 3158011
+#daily_rewards_icon_left_ribbon_color = 3158012
 #daily_rewards_top_bar_color = 3311064
 #daily_rewards_collect_button_color = -4089562
 #fight_boss_button_icon_color = 266788
@@ -400,10 +400,10 @@ goto :start
 	
 	if #tmp_color_1 == #daily_rewards_icon_right_ribbon_color and #tmp_color_2 == #daily_rewards_icon_left_ribbon_color
 		touchPress 0 #daily_rewards_icon_right_ribbon_x #daily_rewards_icon_right_ribbon_y
-		sleep #btn_delay
+		sleep 2000
+	else
+		goto :start
 	endif
-	
-	sleep 2000
 	
 	getColor #tmp_color_1 #daily_rewards_top_bar_x #daily_rewards_top_bar_y
 	getColor #tmp_color_2 #daily_rewards_collect_button_x #daily_rewards_collect_button_y
