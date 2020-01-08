@@ -230,7 +230,7 @@
 #mana_bar_color2 = -69345
 #skill_cancel_color = -7970304
 #prestige_color1 = 4793864
-#prestige_color2 = -593169
+#prestige_color2 = -593425
 #prestige_second_layout_color1 = 7961474
 #prestige_second_layout_color2 = -3234500
 #prestige_third_layout_color1 = 7961474
