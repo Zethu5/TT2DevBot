@@ -237,8 +237,8 @@
 #prestige_third_layout_color2 = -3234500
 #white_color = -65793
 #tab_top_bar_color = 5329237
-#boss_raid_icon_color1 = 4541313
-#boss_raid_icon_color2 = 4013937
+#boss_raid_icon_color1 = 4541823
+#boss_raid_icon_color2 = 3948657
 #boss_raid_exclamation_mark_color = 2632135
 #boss_raid_fight_button_color = -4018432
 #deck_selector_edit_deck_button_color = 753915
