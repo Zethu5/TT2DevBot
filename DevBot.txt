@@ -132,13 +132,13 @@
 #prestige_menu_button_x = 450
 #prestige_menu_button_y = 880
 #prestige_second_layout_x1 = 130
-#prestige_second_layout_y1 = 120
+#prestige_second_layout_y1 = 150
 #prestige_second_layout_x2 = 280
-#prestige_second_layout_y2 = 820
+#prestige_second_layout_y2 = 780
 #prestige_third_layout_x1 = 160
-#prestige_third_layout_y1 = 270
+#prestige_third_layout_y1 = 300
 #prestige_third_layout_x2 = 320
-#prestige_third_layout_y2 = 670
+#prestige_third_layout_y2 = 650
 #commercial_x_button_x1 = 504
 #commercial_x_button_x2 = 35
 #commercial_x_button_y = 36
@@ -197,15 +197,15 @@
 #fight_boss_button_bg_color = 1071599
 #skills_tab_passive_color = 2112406
 #skills_tab_bg_passive_color = 3958771
-#skills_tab_active_color = -5267587
+#skills_tab_active_color = -5661315
 #skill_tree_icon_color = 3531516
 #maximize_tab_button_color = 2894637
 #max_upgrade_skill_button_color = 2236808
 #heroes_tab_button_inactive_color = 6379040
-#heroes_tab_button_active_color = 2368548
+#heroes_tab_button_active_color = 2434324
 #pet_eggs_icon_color = -65793
 #masteries_inner_circle_color = 3005183
-#close_tab_button_color = 2960430
+#close_tab_button_color = 2829359
 #fairy_discount_color1 = -65832
 #fairy_discount_color2 = 1826555
 #fairy_discount_color3 = 7416279
@@ -653,7 +653,7 @@ goto :start
 
 	:func_close_heroes_tab
 		getColor #tmp_color_1 #close_tab_button_x #close_tab_button_y
-
+		
 		if #tmp_color_1 == #close_tab_button_color
 			touchPress 0 #close_tab_button_x #close_tab_button_y
 			sleep #btn_delay
